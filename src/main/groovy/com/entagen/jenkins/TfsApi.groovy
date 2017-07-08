@@ -12,7 +12,7 @@ import org.apache.http.HttpStatus
 import org.apache.http.HttpRequestInterceptor
 import org.apache.http.protocol.HttpContext
 import org.apache.http.HttpRequest
-import org.apache.http.HttpReponse
+import org.apache.http.HttpResponse
 
 class TfsApi {
     String tfsUrl
@@ -79,7 +79,7 @@ class TfsApi {
         }
     }
 
-    HttpReponse doGetHttpRequest(String requestUrl) {
+    HttpResponse doGetHttpRequest(String requestUrl) {
         println "RequestUrl: $requestUrl"
 
         URL url = new URL(requestUrl)
@@ -87,7 +87,7 @@ class TfsApi {
 
         connection.setRequestMethod("GET")
 
-        HttpReponse resp = new HttpReponse(connection)
+        HttpResponse resp = new HttpResponse(connection)
 
         println "Response: $resp.message"
         println "Response-body: $resp.body"
