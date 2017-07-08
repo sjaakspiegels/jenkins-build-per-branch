@@ -82,20 +82,20 @@ class TfsApi {
         }
     }
 
-    HttpResponse doGetHttpRequest(String requestUrl) {
-        println "RequestUrl: $requestUrl"
+//    HttpResponse doGetHttpRequest(String requestUrl) {
+//        println "RequestUrl: $requestUrl"
 
-        URL url = new URL(requestUrl)
-        HttpURLConnection connection = url.openConnection()
+//        URL url = new URL(requestUrl)
+//        HttpURLConnection connection = url.openConnection()
 
-        connection.setRequestMethod("GET")
+//        connection.setRequestMethod("GET")
 
-        HttpResponse resp = new HttpResponse(connection)
+//        HttpResponse resp = new HttpResponse(connection)
 
-        println "Response: $resp.message"
-        println "Response-body: $resp.body"
+//        println "Response: $resp.message"
+//        println "Response-body: $resp.body"
         
-        return resp
-    }
+//        return resp
+//    }
 
 }
