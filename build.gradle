@@ -38,6 +38,17 @@ task syncWithRepo(dependsOn: 'classes', type: JavaExec) {
 
 }
 
+task syncWithTfs(dependsOn: 'classes', type: JavaExec) {
+    main = 'com.entagen.jenkins.Main'
+    classpath = sourceSets.main.runtimeClasspath
+    // pass through specified system properties to the call to main
+    ['help', 'jenkinsUrl', 'jenkinsUser', 'jenkinsPassword', 'tfsUrl', 'templateJobPrefix', 'templateBranchName', 'branchNameRegex', 'nestedView', 'viewRegex', 'printConfig', 'dryRun', 'startOnCreate', 'noViews', 'noDelete', 'tfsUser', 'tfsToken'].each {
+        if (System.getProperty(it)) systemProperty it, System.getProperty(it)
+    }
+
+}
+
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.9'
 }
