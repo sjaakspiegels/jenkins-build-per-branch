@@ -2,7 +2,7 @@ package com.entagen.jenkins
 
 import java.util.regex.Pattern
 import groovyx.net.http.HTTPBuilder
-
+import org.apache.http.HttpResponse;
 
 
 class TfsApi {
@@ -72,7 +72,7 @@ class TfsApi {
 
     HttpReponse doGetHttpRequest(String requestUrl) {
         println "RequestUrl: $requestUrl"
-        
+
         URL url = new URL(requestUrl)
         HttpURLConnection connection = url.openConnection()
 
