@@ -198,7 +198,7 @@ class JenkinsJobManager {
 	TfsApi initTfsApi() {
 		if (!tfsApi) {
 			assert tfsUrl != null
-			this.tfsApi = new TfsApi(tfsUser: tfsUser, tfsToken: tfsToken, tfsUrl: tfsUrl)
+			this.tfsApi = new TfsApi(tfsUser: tfsUser, tfsToken: tfsToken, tfsUrl: tfsUrl, tfsCollection: tfsCollection)
             if (this.branchNameRegex){
                 this.tfsApi.branchNameFilter = ~this.branchNameRegex
             }

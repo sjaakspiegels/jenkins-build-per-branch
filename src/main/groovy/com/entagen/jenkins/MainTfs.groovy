@@ -8,7 +8,8 @@ class MainTfs {
     public static final Map<String, Map<String, Object>> opts = [
             h: [longOpt: 'help', required: false, args: 0, argName: 'help', description: "Print usage information - gradle flag -Dhelp=true"],
             j: [longOpt: 'jenkins-url', required: true, args: 1, argName: 'jenkinsUrl', description: "Jenkins URL - gradle flag -DjenkinsUrl=<jenkinsUrl>"],
-            w: [longOpt: 'tfs-url',  required: false, args: 1, argName: 'tfsUrl', description: "Tfs Repository URL - gradle flag -DtfsUrl=<tfsUrl>"],
+            w: [longOpt: 'tfs-url',  required: true, args: 1, argName: 'tfsUrl', description: "Tfs Repository URL - gradle flag -DtfsUrl=<tfsUrl>"],
+            y: [longOpt: 'tfs-collection',  required: true, args: 1, argName: 'tfsCollection', description: "Tfs Repository Collection - gradle flag -DtfsCollection=<tfsCollection>"],
             p: [longOpt: 'job-prefix', required: true, args: 1, argName: 'templateJobPrefix', description: "Template Job Prefix, - gradle flag -DtemplateJobPrefix=<jobPrefix>"],
             t: [longOpt: 'template-branch', required: true, args: 1, argName:  'templateBranchName', description: "Template Branch Name - gradle flag -DtemplateBranchName=<branchName>"],
             n: [longOpt: 'nested-view', required: false, args: 1, argName: 'nestedView', description: "Nested Parent View Name - gradle flag -DnestedView=<nestedView> - optional - must have Jenkins Nested View Plugin installed"],

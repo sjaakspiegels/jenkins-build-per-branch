@@ -4,14 +4,16 @@ import java.util.regex.Pattern
 
 class TfsApi {
     String tfsUrl
+    String tfsCollection
 	String tfsUser
 	String tfsToken
     Pattern branchNameFilter = null
 
     public List<String> getBranchNames() {
-		println "Tfs settings" + tfsUrl + ";" + tfsUser + ";" + tfsToken
+        String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${tfsCollection}"
 
-
+        String res = doGetHttpRequest(command)
+//curl -u svctfsjenkins:agxqquxts22ty2dnh4wvunqvxmzckrd43w236z6p55qwlfvluiwa  http://10.100.10.161:8080/tfs/Voogd/_apis/tfvc/items?scopePath=$/Innovation%20Lab
  //       String command = "git ls-remote --heads ${gitUrl}"
        List<String> branchNames = []
 
@@ -60,6 +62,20 @@ class TfsApi {
             println errorText
             throw new Exception("Error executing command: $command -> $errorText")
         }
+    }
+
+    HttpReponse doGetHttpRequest(String requestUrl) {
+        URL url = new URL(requestUrl)
+        HttpURLConnection connection = url.openConnection()
+
+        connection.setRequestMethod("GET")
+
+        HttpReponse resp = new HttpReponse(connection)
+
+        println "Response: $resp.message"
+        println "Response-body: $resp.body"
+        
+        return resp
     }
 
 }
