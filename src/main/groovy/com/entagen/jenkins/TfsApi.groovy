@@ -1,13 +1,18 @@
 package com.entagen.jenkins
 
 import java.util.regex.Pattern
+//import groovyx.net.http.HTTPBuilder
+import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
+import groovyx.net.http.RESTClient
+import static groovyx.net.http.ContentType.*
+import org.apache.http.conn.HttpHostConnectException
+import org.apache.http.client.HttpResponseException
+import org.apache.http.HttpStatus
+import org.apache.http.HttpRequestInterceptor
+import org.apache.http.protocol.HttpContext
+import org.apache.http.HttpRequest
+import org.apache.http.HttpReponse
 
 class TfsApi {
     String tfsUrl
