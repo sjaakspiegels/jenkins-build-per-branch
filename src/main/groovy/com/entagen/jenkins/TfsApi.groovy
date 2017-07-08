@@ -16,9 +16,9 @@ class TfsApi {
         String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${tfsCollection}"
 
 
-def http = new HTTPBuilder('$tfsUrl')
-def html = http.get(path : '/_apis/tfvc/items', query : [scopePath:'$tfsCollection'])
- //       String res = doGetHttpRequest(command)
+//def http = new HTTPBuilder('$tfsUrl')
+//def html = http.get(path : '/_apis/tfvc/items', query : [scopePath:'$tfsCollection'])
+        String res = doGetHttpRequest(command)
 //curl -u svctfsjenkins:agxqquxts22ty2dnh4wvunqvxmzckrd43w236z6p55qwlfvluiwa  http://10.100.10.161:8080/tfs/Voogd/_apis/tfvc/items?scopePath=$/Innovation%20Lab
  //       String command = "git ls-remote --heads ${gitUrl}"
        List<String> branchNames = []
@@ -70,18 +70,20 @@ def html = http.get(path : '/_apis/tfvc/items', query : [scopePath:'$tfsCollecti
         }
     }
 
-//    HttpReponse doGetHttpRequest(String requestUrl) {
-//        URL url = new URL(requestUrl)
-//        HttpURLConnection connection = url.openConnection()
-
-//        connection.setRequestMethod("GET")
-
-//        HttpReponse resp = new HttpReponse(connection)
-
-//        println "Response: $resp.message"
-//        println "Response-body: $resp.body"
+    HttpReponse doGetHttpRequest(String requestUrl) {
+        println "RequestUrl: $requestUrl"
         
-//        return resp
-//    }
+        URL url = new URL(requestUrl)
+        HttpURLConnection connection = url.openConnection()
+
+        connection.setRequestMethod("GET")
+
+        HttpReponse resp = new HttpReponse(connection)
+
+        println "Response: $resp.message"
+        println "Response-body: $resp.body"
+        
+        return resp
+    }
 
 }
