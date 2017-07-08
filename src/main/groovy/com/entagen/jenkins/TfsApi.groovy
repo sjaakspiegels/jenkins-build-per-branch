@@ -24,7 +24,10 @@ class TfsApi {
     public List<String> getBranchNames() {
         String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${tfsCollection}"
 
-
+        def process = [ 'bash', '-c', "curl ${command}" ].execute().text
+        process.waitFor()
+        println process.err.text
+        println process.text
 //def http = new HTTPBuilder('$tfsUrl')
 //def html = http.get(path : '/_apis/tfvc/items', query : [scopePath:'$tfsCollection'])
         String res = doGetHttpRequest(command)
