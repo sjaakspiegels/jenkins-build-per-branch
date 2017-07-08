@@ -12,6 +12,8 @@ class JenkinsJobManager {
     String viewRegex
     String jenkinsUser
     String jenkinsPassword
+    String tfsUser
+    String tfsToken
     
     Boolean dryRun = false
     Boolean noViews = false

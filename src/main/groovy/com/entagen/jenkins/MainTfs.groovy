@@ -33,11 +33,6 @@ class MainTfs {
     }
 
     public static Map<String, String> parseArgs(String[] args) {
-
-        println "==================args============================================="
-        args.each { k -> println " ${k}" }
-        println "==================args============================================="
-
         def cli = createCliBuilder()
         OptionAccessor commandLineOptions = cli.parse(args)
 
@@ -81,13 +76,13 @@ class MainTfs {
     }
 
     public static showConfiguration(Map<String, String> argsMap) {
-        println "===============asd================================================"
+        println "==============================================================="
         argsMap.each { k, v -> println " $k: ${formatValue(k, v)}" }
-        println "===============asd================================================"
+        println "==============================================================="
     }
 
     public static formatValue(String key, String value) {
-        return (key == "jenkinsPassword") ? "********" : value
+        return (key == "jenkinsPassword" || key == "tfsToken") ? "********" :value
     }
 
     public static Map<String, String> mergeSystemPropertyOptions(OptionAccessor commandLineOptions) {
