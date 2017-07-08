@@ -22,8 +22,8 @@ class MainTfs {
             f: [longOpt: 'filter-branch-names', required: false, args:  1, argName:  'branchNameRegex', description: "Only branches matching the regex will be accepted - gradle flag: -DbranchNameRegex=<regex>"],
             usr: [longOpt: 'jenkins-user',  required: false, args: 1, argName: 'jenkinsUser', description: "Jenkins username - gradle flag -DjenkinsUser=<jenkinsUser>"],
             pwd: [longOpt: 'jenkins-password',  required: false, args: 1, argName: 'jenkinsPassword', description: "Jenkins password - gradle flag -DjenkinsPassword=<jenkinsPassword>"],
-            tfsusr: [longOpt: 'tfs-user',  required: false, args: 1, argName: 'tfsUser', description: "TFS username - gradle flag -DtfsUser=<tfsUser>"],
-            tfstoken: [longOpt: 'tfs-token',  required: false, args: 1, argName: 'tfsToken', description: "Tfs personal token - gradle flag -DtfsToken=<tfsToken>"]
+            tfsusr: [longOpt: 'tfs-user',  required: true, args: 1, argName: 'tfsUser', description: "TFS username - gradle flag -DtfsUser=<tfsUser>"],
+            tfstoken: [longOpt: 'tfs-token',  required: true, args: 1, argName: 'tfsToken', description: "Tfs personal token - gradle flag -DtfsToken=<tfsToken>"]
     ]
 
     public static void main(String[] args) {
