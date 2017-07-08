@@ -31,7 +31,7 @@ class TfsApi {
         println response
 //def http = new HTTPBuilder('$tfsUrl')
 //def html = http.get(path : '/_apis/tfvc/items', query : [scopePath:'$tfsCollection'])
-        String res = doGetHttpRequest(command)
+//        String res = doGetHttpRequest(command)
 //curl -u svctfsjenkins:agxqquxts22ty2dnh4wvunqvxmzckrd43w236z6p55qwlfvluiwa  http://10.100.10.161:8080/tfs/Voogd/_apis/tfvc/items?scopePath=$/Innovation%20Lab
  //       String command = "git ls-remote --heads ${gitUrl}"
        List<String> branchNames = []
