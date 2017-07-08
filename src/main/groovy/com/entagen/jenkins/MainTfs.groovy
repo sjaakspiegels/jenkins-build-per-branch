@@ -33,6 +33,11 @@ class MainTfs {
     }
 
     public static Map<String, String> parseArgs(String[] args) {
+
+        println "==================args============================================="
+        args.each { k, println " $k" }
+        println "==================args============================================="
+
         def cli = createCliBuilder()
         OptionAccessor commandLineOptions = cli.parse(args)
 
