@@ -81,9 +81,9 @@ class MainTfs {
     }
 
     public static showConfiguration(Map<String, String> argsMap) {
-        println "==============================================================="
+        println "===============asd================================================"
         argsMap.each { k, v -> println " $k: ${formatValue(k, v)}" }
-        println "==============================================================="
+        println "===============asd================================================"
     }
 
     public static formatValue(String key, String value) {
