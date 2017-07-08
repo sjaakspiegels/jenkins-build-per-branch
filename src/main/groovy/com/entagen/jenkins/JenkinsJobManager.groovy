@@ -20,6 +20,7 @@ class JenkinsJobManager {
 
     JenkinsApi jenkinsApi
     GitApi gitApi
+	TfsApi tfsApi;
 
     JenkinsJobManager(Map props) {
         for (property in props) {
@@ -27,9 +28,12 @@ class JenkinsJobManager {
         }
         initJenkinsApi()
         initGitApi()
+		initTfsApi()
     }
 
     void syncWithRepo() {
+        initGitApi()
+
         List<String> allBranchNames = gitApi.branchNames
         List<String> allJobNames = jenkinsApi.jobNames
 
@@ -43,6 +47,24 @@ class JenkinsJobManager {
         if (!noViews) {
             syncViews(allBranchNames)
         }
+    }
+
+	void syncWithTfs() {
+        initTfsApi()
+
+        List<String> allBranchNames = tfsApi.branchNames
+        List<String> allJobNames = jenkinsApi.jobNames
+
+        // ensure that there is at least one job matching the template pattern, collect the set of template jobs
+ //       List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
+
+        // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
+ //       syncJobs(allBranchNames, allJobNames, templateJobs)
+
+        // create any missing branch views, scoped within a nested view if we were given one
+ //       if (!noViews) {
+ //           syncViews(allBranchNames)
+ //       }
     }
 
     public void syncJobs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
@@ -169,4 +191,16 @@ class JenkinsJobManager {
 
         return this.gitApi
     }
+
+	TfsApi initTfsApi() {
+		if (!tfsApi) {
+			assert tfsUrl != null
+			this.tfsApi = new TfsApi(tfsUser: tfsUser, tfsToken: tfsToken, tfsUrl: tfsUrl)
+            if (this.branchNameRegex){
+                this.tfsApi.branchNameFilter = ~this.branchNameRegex
+            }
+        }
+
+        return this.tfsApi
+	}
 }

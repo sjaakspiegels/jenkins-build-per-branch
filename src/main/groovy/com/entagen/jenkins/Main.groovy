@@ -20,14 +20,16 @@ class Main {
             k: [longOpt: 'no-delete', required: false, args: 0, argName: 'noDelete', description: "Do not delete (keep) branches and views - gradle flag -DnoDelete=true"],
             f: [longOpt: 'filter-branch-names', required: false, args:  1, argName:  'branchNameRegex', description: "Only branches matching the regex will be accepted - gradle flag: -DbranchNameRegex=<regex>"],
             usr: [longOpt: 'jenkins-user',  required: false, args: 1, argName: 'jenkinsUser', description: "Jenkins username - gradle flag -DjenkinsUser=<jenkinsUser>"],
-            pwd: [longOpt: 'jenkins-password',  required: false, args: 1, argName: 'jenkinsPassword', description: "Jenkins password - gradle flag -DjenkinsPassword=<jenkinsPassword>"]
+            pwd: [longOpt: 'jenkins-password',  required: false, args: 1, argName: 'jenkinsPassword', description: "Jenkins password - gradle flag -DjenkinsPassword=<jenkinsPassword>"],
+            tfsusr: [longOpt: 'tfs-user',  required: false, args: 1, argName: 'tfsUser', description: "TFS username - gradle flag -DtfsUser=<tfsUser>"],
+            tfstoken: [longOpt: 'tfs-token',  required: false, args: 1, argName: 'tfsToken', description: "Tfs personal token - gradle flag -DtfsToken=<tfsToken>"]
     ]
 
     public static void main(String[] args) {
         Map<String, String> argsMap = parseArgs(args)
         showConfiguration(argsMap)
         JenkinsJobManager manager = new JenkinsJobManager(argsMap)
-        manager.syncWithRepo()
+ //       manager.syncWithRepo()
     }
 
     public static Map<String, String> parseArgs(String[] args) {
