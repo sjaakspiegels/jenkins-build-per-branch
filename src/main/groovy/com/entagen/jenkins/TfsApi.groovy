@@ -9,7 +9,7 @@ class TfsApi {
     Pattern branchNameFilter = null
 
     public List<String> getBranchNames() {
-		println "Tfs settings" + tfsUser + ";" + tfsToken
+		println "Tfs settings" + tfsUrl + ";" + tfsUser + ";" + tfsToken
 
 
  //       String command = "git ls-remote --heads ${gitUrl}"
