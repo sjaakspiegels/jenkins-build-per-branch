@@ -30,8 +30,8 @@ class JenkinsJobManager {
             this."${property.key}" = property.value
         }
         initJenkinsApi()
-        initGitApi()
-		initTfsApi()
+   //     initGitApi()
+//		initTfsApi()
     }
 
     void syncWithRepo() {
