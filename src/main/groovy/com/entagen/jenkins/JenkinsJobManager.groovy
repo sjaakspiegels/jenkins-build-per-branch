@@ -13,6 +13,7 @@ class JenkinsJobManager {
     String jenkinsUser
     String jenkinsPassword
     String tfsUrl
+    String tfsCollection
     String tfsUser
     String tfsToken
     
