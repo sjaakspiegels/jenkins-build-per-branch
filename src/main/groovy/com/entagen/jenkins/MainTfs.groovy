@@ -56,7 +56,7 @@ class MainTfs {
         }
 
         if(missingArgs) {
-            missingArgs.each {shortOpt, missingArg -> println "missing required argument: ${missingArg.argName}"}
+            missingArgs.each {shortOpt, missingArg -> println "detected missing required argument: ${missingArg.argName}"}
             cli.usage()
             System.exit(1)
         }
