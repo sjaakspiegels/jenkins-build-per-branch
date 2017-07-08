@@ -1,6 +1,9 @@
 package com.entagen.jenkins
 
 import java.util.regex.Pattern
+import groovyx.net.http.HTTPBuilder
+
+
 
 class TfsApi {
     String tfsUrl
@@ -12,7 +15,10 @@ class TfsApi {
     public List<String> getBranchNames() {
         String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${tfsCollection}"
 
-        String res = doGetHttpRequest(command)
+
+def http = new HTTPBuilder('$tfsUrl')
+def html = http.get(path : '/_apis/tfvc/items', query : [scopePath:'$tfsCollection'])
+ //       String res = doGetHttpRequest(command)
 //curl -u svctfsjenkins:agxqquxts22ty2dnh4wvunqvxmzckrd43w236z6p55qwlfvluiwa  http://10.100.10.161:8080/tfs/Voogd/_apis/tfvc/items?scopePath=$/Innovation%20Lab
  //       String command = "git ls-remote --heads ${gitUrl}"
        List<String> branchNames = []
@@ -64,18 +70,18 @@ class TfsApi {
         }
     }
 
-    HttpReponse doGetHttpRequest(String requestUrl) {
-        URL url = new URL(requestUrl)
-        HttpURLConnection connection = url.openConnection()
+//    HttpReponse doGetHttpRequest(String requestUrl) {
+//        URL url = new URL(requestUrl)
+//        HttpURLConnection connection = url.openConnection()
 
-        connection.setRequestMethod("GET")
+//        connection.setRequestMethod("GET")
 
-        HttpReponse resp = new HttpReponse(connection)
+//        HttpReponse resp = new HttpReponse(connection)
 
-        println "Response: $resp.message"
-        println "Response-body: $resp.body"
+//        println "Response: $resp.message"
+//        println "Response-body: $resp.body"
         
-        return resp
-    }
+//        return resp
+//    }
 
 }
