@@ -67,11 +67,13 @@ class TfsApi {
 
         println response
 
-        def list = new JsonSlurper().parseText(response)
+        def responseObj = new JsonSlurper().parseText(response)
 
-        list.each { println it }
+        def folders = response.value
 
-        def paths = list.path
+        folders.each { println it }
+
+        def paths = folders.path
 
         paths.each { println it}
 
