@@ -6,6 +6,7 @@ import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.RESTClient
 import groovy.json.JsonSlurper
+import java.net.URLEncoder
 import static groovyx.net.http.ContentType.*
 import org.apache.http.conn.HttpHostConnectException
 import org.apache.http.client.HttpResponseException
@@ -75,9 +76,11 @@ class TfsApi {
 
         values.each {
             if (it.isFolder) {
-                branchNames.add(it.path)
-                println it.path
-                branchNames.add(getAllFolders(it.path))
+                def path = URLEncoder.encode(it.path, "UTF-8")
+                println path
+                branchNames.add(path)
+                
+                branchNames.add(getAllFolders(path))
             }
         }
 
@@ -86,6 +89,8 @@ class TfsApi {
         return branchNames
     }
 
+String url = "29th Apartment";  
+String encodedUrl = URLEncoder.encode(url, "UTF-8");
 
     public Boolean passesFilter(String branchName) {
         if (!branchName) return false
