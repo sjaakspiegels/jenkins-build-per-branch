@@ -34,6 +34,8 @@ class TfsApi {
 
        def list2 = list.findAll { it.endsWith tfsProject}
 
+list2.each { println it  }
+
        List<String> foundBranchNames = []
 
         list2.each { 
