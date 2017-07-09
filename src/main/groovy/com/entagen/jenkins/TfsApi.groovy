@@ -40,6 +40,7 @@ class TfsApi {
 
        def list = getAllFolders(tfsCollection)
 
+       list.each { println it}
    //    def paths = list.path
 
    //    paths.each { println it }
@@ -74,6 +75,8 @@ class TfsApi {
         values.each {
             if (it.isFolder) {
                 branchNames.add(it.path)
+                println it.path
+                branchNames.add(getAllFolders(it.path))
             }
         }
 
