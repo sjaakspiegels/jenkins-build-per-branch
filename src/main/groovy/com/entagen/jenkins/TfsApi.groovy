@@ -19,6 +19,7 @@ import org.apache.http.HttpResponse
 class TfsApi {
     String tfsUrl
     String tfsCollection
+    String tfsProject
 	String tfsUser
 	String tfsToken
     Pattern branchNameFilter = null
@@ -43,7 +44,9 @@ class TfsApi {
 
        list.each { println it}
 
+       def list2 = list.findAll { it.endsWith tfsProject}
 
+        list2.each { println it}
    //    def paths = list.path
 
    //    paths.each { println it }

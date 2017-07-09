@@ -22,6 +22,7 @@ class MainTfs {
             usr: [longOpt: 'jenkins-user',  required: false, args: 1, argName: 'jenkinsUser', description: "Jenkins username - gradle flag -DjenkinsUser=<jenkinsUser>"],
             pwd: [longOpt: 'jenkins-password',  required: false, args: 1, argName: 'jenkinsPassword', description: "Jenkins password - gradle flag -DjenkinsPassword=<jenkinsPassword>"],
             tfscollection: [longOpt: 'tfs-collection',  required: true, args: 1, argName: 'tfsCollection', description: "Tfs Repository Collection - gradle flag -DtfsCollection=<tfsCollection>"],
+            tfsproject: [longOpt: 'tfs-project',  required: true, args: 1, argName: 'tfsProject', description: "Tfs Repository Project - gradle flag -DtfsProject=<tfsProject>"],
             tfsusr: [longOpt: 'tfs-user',  required: true, args: 1, argName: 'tfsUser', description: "TFS username - gradle flag -DtfsUser=<tfsUser>"],
             tfstoken: [longOpt: 'tfs-token',  required: false, args: 1, argName: 'tfsToken', description: "Tfs personal token - gradle flag -DtfsToken=<tfsToken>"]
     ]
