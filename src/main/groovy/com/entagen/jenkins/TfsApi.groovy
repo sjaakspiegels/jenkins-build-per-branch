@@ -62,7 +62,6 @@ class TfsApi {
         List<String> branchNames = []
 
         String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${rootFolder}"
-        println command
 
         def response = [ 'bash', '-c', "curl ${command}" ].execute().text
         
@@ -73,7 +72,7 @@ class TfsApi {
         values.each {
             if (it.isFolder) {
                 def path = URLEncoder.encode(it.path, "UTF-8")
-                println path
+                
                 if (path != rootFolder) {
 
                     branchNames.add(path)
@@ -82,8 +81,6 @@ class TfsApi {
                 }
             }
         }
-
-        branchNames.each { println it}
 
         return branchNames
     }
