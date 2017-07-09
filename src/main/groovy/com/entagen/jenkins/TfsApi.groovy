@@ -37,7 +37,7 @@ class TfsApi {
        List<String> foundBranchNames = []
 
         list2.each { 
-            foundBranchNames.add(it.replaceAll(tfsCollection , "").replaceAll("\\", "_"))
+            foundBranchNames.add(it.replaceAll(tfsCollection , ""))
         }
             
         foundBranchNames.each { println it}
