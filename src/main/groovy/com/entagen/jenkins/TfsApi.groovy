@@ -69,10 +69,11 @@ class TfsApi {
 
         def values = responseJson.value
 
-        if (!values.any(elem -> elem.endsWith(".sln")) {
+        if (!values.any{elem -> elem.endsWith(".sln")}) {
 
               values.each {
                 if (it.isFolder) {
+                    println it.path
                     def path = URLEncoder.encode(it.path, "UTF-8")
                 
                     if (path != rootFolder) {
