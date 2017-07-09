@@ -24,7 +24,7 @@ class TfsApi {
     Pattern branchNameFilter = null
 
     public List<String> getBranchNames() {
-        println " get branchnames"
+        println " get branchnames ${branchNameFilter}"
  //       String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${tfsCollection}"
 
  //       def response = [ 'bash', '-c', "curl ${command}" ].execute().text
@@ -42,6 +42,8 @@ class TfsApi {
        def list = getAllFolders(tfsCollection)
 
        list.each { println it}
+
+
    //    def paths = list.path
 
    //    paths.each { println it }
