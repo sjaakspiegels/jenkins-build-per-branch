@@ -61,23 +61,23 @@ class TfsApi {
 
         String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${rootFolder}"
 
-        println command
-
         def response = [ 'bash', '-c', "curl ${command}" ].execute().text
 
-        println response
+        def responseJson = new JsonSlurper().parseText(response)
 
-        def responseObj = new JsonSlurper().parseText(response)
+        println responseJson
 
-        println responseObj
+        def values = responseJson.value
 
-        def folders = responseObj.value
+        values.each { println it }
 
-        folders.each { println it }
+        values.each {
+            if (it.isFolder) {
+                branchNames.add(it.path)
+            }
+        }
 
-        def paths = folders.path
-
-        paths.each { println it}
+        branchNames.each { println it}
 
         return branchNames
     }
