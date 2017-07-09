@@ -61,7 +61,8 @@ class TfsApi {
         List<String> branchNames = []
 
         String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${rootFolder}"
-
+        println command
+        
         def response = [ 'bash', '-c', "curl ${command}" ].execute().text
 
         def responseJson = new JsonSlurper().parseText(response)
