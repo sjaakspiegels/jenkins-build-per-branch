@@ -14,6 +14,7 @@ class JenkinsJobManager {
     String jenkinsPassword
     String tfsUrl
     String tfsCollection
+    String tfsProject
     String tfsUser
     String tfsToken
     
@@ -199,7 +200,7 @@ class JenkinsJobManager {
 	TfsApi initTfsApi() {
 		if (!tfsApi) {
 			assert tfsUrl != null
-			this.tfsApi = new TfsApi(tfsUser: tfsUser, tfsToken: tfsToken, tfsUrl: tfsUrl, tfsCollection: tfsCollection)
+			this.tfsApi = new TfsApi(tfsUser: tfsUser, tfsToken: tfsToken, tfsUrl: tfsUrl, tfsCollection: tfsCollection, tfsProject: tfsProject)
             if (this.branchNameRegex){
                 this.tfsApi.branchNameFilter = ~this.branchNameRegex
             }
