@@ -5,6 +5,7 @@ import java.util.regex.Pattern
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.RESTClient
+import groovy.json.JsonSlurper
 import static groovyx.net.http.ContentType.*
 import org.apache.http.conn.HttpHostConnectException
 import org.apache.http.client.HttpResponseException
@@ -22,13 +23,13 @@ class TfsApi {
     Pattern branchNameFilter = null
 
     public List<String> getBranchNames() {
-        String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${tfsCollection}"
+ //       String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${tfsCollection}"
 
-        def response = [ 'bash', '-c', "curl ${command}" ].execute().text
+ //       def response = [ 'bash', '-c', "curl ${command}" ].execute().text
         //process.waitFor()
         //println process.err.text
         //println process.text
-        println response
+ //       println response
 //def http = new HTTPBuilder('$tfsUrl')
 //def html = http.get(path : '/_apis/tfvc/items', query : [scopePath:'$tfsCollection'])
 //        String res = doGetHttpRequest(command)
@@ -36,6 +37,11 @@ class TfsApi {
  //       String command = "git ls-remote --heads ${gitUrl}"
        List<String> branchNames = []
 
+       def list = getAllFolders(tfsCollection)
+
+   //    def paths = list.path
+
+   //    paths.each { println it }
  //       eachResultLine(command) { String line ->
  //           String branchNameRegex = "^.*\trefs/heads/(.*)\$"
  //           String branchName = line.find(branchNameRegex) { full, branchName -> branchName }
@@ -48,6 +54,23 @@ class TfsApi {
 
         return branchNames
     }
+
+    public List<String> getAllFolders(String rootFolder) {
+        List<String> branchNames = []
+
+        String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${rootFolder}"
+
+        def response = [ 'bash', '-c', "curl ${command}" ].execute().text
+
+        def list = new JsonSlurper().parseText( response)
+
+        def paths = list.path
+
+        paths.each { println it}
+
+        return branchNames
+    }
+
 
     public Boolean passesFilter(String branchName) {
         if (!branchName) return false
