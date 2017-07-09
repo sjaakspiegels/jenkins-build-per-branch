@@ -46,6 +46,7 @@ class TfsApi {
 
        def list2 = list.findAll { it.endsWith tfsProject}
 
+       println "filtered list ${tfsProject}"
         list2.each { println it}
    //    def paths = list.path
 
