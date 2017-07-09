@@ -65,14 +65,10 @@ class TfsApi {
         println command
 
         def response = [ 'bash', '-c', "curl ${command}" ].execute().text
-        println response
+        
         def responseJson = new JsonSlurper().parseText(response)
 
-        println responseJson
-
         def values = responseJson.value
-
-        values.each { println it }
 
         values.each {
             if (it.isFolder) {
