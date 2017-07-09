@@ -65,7 +65,11 @@ class TfsApi {
 
         def response = [ 'bash', '-c', "curl ${command}" ].execute().text
 
-        def list = new JsonSlurper().parseText( response)
+        println response
+
+        def list = new JsonSlurper().parseText(response)
+
+        list.each { println it }
 
         def paths = list.path
 
