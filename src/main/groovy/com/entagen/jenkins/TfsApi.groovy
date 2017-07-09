@@ -73,7 +73,7 @@ class TfsApi {
 
               values.each {
                 if (it.isFolder) {
-                    println it.path
+                    
                     def path = URLEncoder.encode(it.path, "UTF-8")
                 
                     if (path != rootFolder) {
@@ -86,9 +86,6 @@ class TfsApi {
 
         return branchNames
     }
-
-String url = "29th Apartment";  
-String encodedUrl = URLEncoder.encode(url, "UTF-8");
 
     public Boolean passesFilter(String branchName) {
         if (!branchName) return false
