@@ -59,7 +59,8 @@ class TfsApi {
               values.each {
                 if (it.isFolder) {
                     
-                    def path = URLEncoder.encode(it.path, "UTF-8")
+                    def path = it.path  
+                    //URLEncoder.encode(it.path, "UTF-8")
                 
                     if (path != rootFolder) {
                         branchNames.add(it.path)
