@@ -30,31 +30,9 @@ class TfsApi {
 
        def list = getAllFolders(tfsCollection)
 
-       list.each { println it}
+       branchNames = list.findAll { it.endsWith tfsProject}
 
-       def list2 = list.findAll { it.endsWith tfsProject}
-
-list2.each { println it  }
-
-       List<String> foundBranchNames = []
-
-        list2.each { 
-            foundBranchNames.add(it.replaceAll(tfsCollection , ""))
-        }
-            
-        foundBranchNames.each { println it}
-   //    def paths = list.path
-
-   //    paths.each { println it }
- //       eachResultLine(command) { String line ->
- //           String branchNameRegex = "^.*\trefs/heads/(.*)\$"
- //           String branchName = line.find(branchNameRegex) { full, branchName -> branchName }
- //           Boolean selected = passesFilter(branchName)
- //           println "\t" + (selected ? "* " : "  ") + "$line"
-            // lines are in the format of: <SHA>\trefs/heads/BRANCH_NAME
-            // ex: b9c209a2bf1c159168bf6bc2dfa9540da7e8c4a26\trefs/heads/master
- //           if (selected) branchNames << branchName
- //       }
+       branchNames.each { println it}
 
         return branchNames
     }
