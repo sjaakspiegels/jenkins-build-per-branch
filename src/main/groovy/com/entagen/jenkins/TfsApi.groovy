@@ -32,6 +32,8 @@ class TfsApi {
 
        def list2 = list.findAll { it.endsWith tfsProject}
 
+       println tfsCollection
+
        list2.each {
            branchNames.add(it.replace(tfsCollection + "/", ""))
        }
