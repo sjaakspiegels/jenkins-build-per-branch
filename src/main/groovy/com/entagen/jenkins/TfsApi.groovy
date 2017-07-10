@@ -33,6 +33,7 @@ class TfsApi {
        def list2 = list.findAll { it.endsWith tfsProject}
 
        println tfsCollection
+       println URLEncoder.encodetfsCollection, "UTF-8")
 
        list2.each {
            branchNames.add(it.replace(tfsCollection + "/", ""))
@@ -59,8 +60,7 @@ class TfsApi {
               values.each {
                 if (it.isFolder) {
                     
-                    def path = it.path  
-                    //URLEncoder.encode(it.path, "UTF-8")
+                    def path = URLEncoder.encode(it.path, "UTF-8")
                 
                     if (path != rootFolder) {
                         branchNames.add(it.path)
