@@ -32,7 +32,7 @@ class TfsApi {
 
        branchNames = list.findAll { it.endsWith tfsProject}
 
-       branchNames.each { it.replaceAll(tfsCollection, "") }
+       branchNames.each { it = it.replaceAll(tfsCollection, "") }
 
         return branchNames
     }
