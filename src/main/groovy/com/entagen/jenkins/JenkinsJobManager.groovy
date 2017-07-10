@@ -101,7 +101,12 @@ class JenkinsJobManager {
     public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
         List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
         List<String> nonTemplateBranchNames = allBranchNames - templateBranchName
-        List<ConcreteJob> expectedJobs = this.expectedJobs(templateJobs, nonTemplateBranchNames)
+        List<ConcreteJob> expectedJobs = this.expectedJobsTFS(templateJobs, nonTemplateBranchNames)
+
+        List<Branch> tfsBranchPaths = allBranchNames.collect { branchPath -> new Branch( branchName: this.tfsBranchToJobName(branchPath), path: branchPath)}
+
+        println "branch paths"
+        tfsBranchPaths.each { println it.branchName + "; " + it.path}
 
         println "currentTemplateDrivenJobNames"
         currentTemplateDrivenJobNames.each { println it}
@@ -122,6 +127,17 @@ class JenkinsJobManager {
 //        if (!noDelete) {
 //            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
 //        }
+    }
+
+    public String tfsBranchToJobName(String branchName)
+    {
+        def name = URLDecoder.decode( branchName, "UTF-8" );
+        def collection = URLDecoder.decode( tfsCollection, "UTF-8" );
+        
+        name = name.replace(collection + "/", "")
+        name = name.replace("/" + tfsProject, "")
+        
+        return name
     }
 
 
@@ -151,6 +167,12 @@ class JenkinsJobManager {
     }
 
     public List<ConcreteJob> expectedJobs(List<TemplateJob> templateJobs, List<String> branchNames) {
+        branchNames.collect { String branchName ->
+            templateJobs.collect { TemplateJob templateJob -> templateJob.concreteJobForBranch(branchName) }
+        }.flatten()
+    }
+
+    public List<ConcreteJob> expectedJobsTfs(List<TemplateJob> templateJobs, List<String> branchNames) {
         branchNames.collect { String branchName ->
             templateJobs.collect { TemplateJob templateJob -> templateJob.concreteJobForBranch(branchName) }
         }.flatten()
