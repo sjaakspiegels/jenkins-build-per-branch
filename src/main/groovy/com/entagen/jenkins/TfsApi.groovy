@@ -32,11 +32,14 @@ class TfsApi {
 
        def list2 = list.findAll { it.endsWith tfsProject}
 
-       println tfsCollection
-       println URLEncoder.encode(tfsCollection, "UTF-8")
-
        list2.each {
-           branchNames.add(it.replace(tfsCollection + "/", ""))
+           def it2 = URLEncoder.encode(it, "UTF-8")
+           it2 = it2.replace(URLEncoder.encode(tfsCollection, "UTF-8") + "/", "")
+           it2 = it2.replace("/" + URLEncoder.encode(tfsProject, "UTF-8"), "")
+           
+           branchNames.add(it2)
+
+           println it2
        }
 
    //    branchNames.each { it = it.replace(tfsCollection + "/", "").replace("/tfsProject", "") }
