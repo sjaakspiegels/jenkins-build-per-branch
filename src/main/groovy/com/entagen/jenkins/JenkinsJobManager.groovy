@@ -28,12 +28,11 @@ class JenkinsJobManager {
 	TfsApi tfsApi;
 
     JenkinsJobManager(Map props) {
+        tfsCollection = ""
         for (property in props) {
             this."${property.key}" = property.value
         }
         initJenkinsApi()
-   //     initGitApi()
-//		initTfsApi()
     }
 
     void syncWithRepo() {
@@ -98,7 +97,7 @@ class JenkinsJobManager {
         if (!missingJobs) return
 
         println "Missing jobs"
-        missingJobs.each { println it}
+        missingJobs.each { println it.jobName + ": " + it.branchName}
 
 
         for(ConcreteJob missingJob in missingJobs) {
