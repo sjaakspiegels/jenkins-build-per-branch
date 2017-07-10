@@ -70,7 +70,7 @@ class JenkinsJobManager {
         templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
   
           // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
-        syncJobs(allBranchNames, allJobNames, templateJobs)
+        syncJobsTfs(allBranchNames, allJobNames, templateJobs)
 
         // create any missing branch views, scoped within a nested view if we were given one
  //       if (!noViews) {
@@ -93,10 +93,37 @@ class JenkinsJobManager {
         expectedJobs.each { println it.jobName + "; " + it.branchName}
 
         createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
+        if (!noDelete) {
+            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
+        }
+    }
+
+    public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
+        List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
+        List<String> nonTemplateBranchNames = allBranchNames - templateBranchName
+        List<ConcreteJob> expectedJobs = this.expectedJobs(templateJobs, nonTemplateBranchNames)
+
+        println "currentTemplateDrivenJobNames"
+        currentTemplateDrivenJobNames.each { println it}
+
+        println "nonTemplateBranchNames"
+        nonTemplateBranchNames.each { println it}
+        
+        println "Expected jobs"
+        expectedJobs.each { println it.jobName + "; " + it.branchName}
+        expectedJobs.each { 
+            def collection = URLDecoder.decode( tfsCollection, "UTF-8" );
+            it.jobName = it.jobName.replace(collection + "/", "")
+        }
+        println "Expected jobs"
+        expectedJobs.each { println it.jobName + "; " + it.branchName}
+
+        createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 //        if (!noDelete) {
 //            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
 //        }
     }
+
 
     public void createMissingJobs(List<ConcreteJob> expectedJobs, List<String> currentJobs, List<TemplateJob> templateJobs) {
         List<ConcreteJob> missingJobs = expectedJobs.findAll { !currentJobs.contains(it.jobName) }
