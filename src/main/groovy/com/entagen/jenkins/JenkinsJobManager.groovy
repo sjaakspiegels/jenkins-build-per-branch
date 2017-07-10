@@ -87,7 +87,7 @@ class JenkinsJobManager {
         println "Expected jobs"
         expectedJobs.each { println it}
 
-//        createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
+        createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 //        if (!noDelete) {
 //            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
 //        }
@@ -96,6 +96,10 @@ class JenkinsJobManager {
     public void createMissingJobs(List<ConcreteJob> expectedJobs, List<String> currentJobs, List<TemplateJob> templateJobs) {
         List<ConcreteJob> missingJobs = expectedJobs.findAll { !currentJobs.contains(it.jobName) }
         if (!missingJobs) return
+
+        println "Missing jobs"
+        missingJobs.each { println it}
+
 
         for(ConcreteJob missingJob in missingJobs) {
             println "Creating missing job: ${missingJob.jobName} from ${missingJob.templateJob.jobName}"
