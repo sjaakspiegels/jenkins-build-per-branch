@@ -37,7 +37,7 @@ class TfsApi {
 println "Collection:"
 println collection
        list2.each { 
-           branchNames.add(it.replace(collection + "/","") 
+           branchNames.add(it.replace(collection + "/",""))
         }
 
         return branchNames
