@@ -33,7 +33,8 @@ class TfsApi {
        branchNames = list.findAll { it.endsWith tfsProject}
 
        def collection = URLDecoder.decode(tfsCollection, "UTF-8");
-
+println "Collection:"
+println collection
        branchNames.each { it = it.replace(collection + "/","") }
 
         return branchNames
