@@ -32,8 +32,6 @@ class TfsApi {
 
        branchNames = list.findAll { it.endsWith tfsProject}
 
-       branchNames.each { println it}
-
         return branchNames
     }
 

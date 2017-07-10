@@ -64,7 +64,8 @@ class JenkinsJobManager {
         allJobNames.each { println it}
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
- //       List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
+        List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
+        templateJobs.each { println it}
 
         // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
  //       syncJobs(allBranchNames, allJobNames, templateJobs)
