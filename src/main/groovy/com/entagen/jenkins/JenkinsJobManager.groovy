@@ -60,15 +60,18 @@ class JenkinsJobManager {
         List<String> allBranchNames = tfsApi.branchNames
         List<String> allJobNames = jenkinsApi.jobNames
 
+        println "All branch names"
         allBranchNames.each { println it}
+        println "All jobs"
         allJobNames.each { println it}
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
         List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
+        println "Template jobs"
         templateJobs.each { println it}
 
         // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
- //       syncJobs(allBranchNames, allJobNames, templateJobs)
+        syncJobs(allBranchNames, allJobNames, templateJobs)
 
         // create any missing branch views, scoped within a nested view if we were given one
  //       if (!noViews) {
@@ -81,10 +84,13 @@ class JenkinsJobManager {
         List<String> nonTemplateBranchNames = allBranchNames - templateBranchName
         List<ConcreteJob> expectedJobs = this.expectedJobs(templateJobs, nonTemplateBranchNames)
 
-        createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
-        if (!noDelete) {
-            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
-        }
+        println "Expected jobs"
+        expectedJobs.each { println it}
+
+//        createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
+//        if (!noDelete) {
+//            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
+//        }
     }
 
     public void createMissingJobs(List<ConcreteJob> expectedJobs, List<String> currentJobs, List<TemplateJob> templateJobs) {
