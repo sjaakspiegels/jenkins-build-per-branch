@@ -30,9 +30,13 @@ class TfsApi {
 
        def list = getAllFolders(tfsCollection)
 
-       branchNames = list.findAll { it.endsWith tfsProject}
+       def list2 = list.findAll { it.endsWith tfsProject}
 
-       branchNames.each { it = it.replace(tfsCollection + "/", "").replace("/tfsProject", "") }
+       list2.each {
+           branchNames.add(it.replace(tfsCollection + "/", ""))
+       }
+
+   //    branchNames.each { it = it.replace(tfsCollection + "/", "").replace("/tfsProject", "") }
 
         return branchNames
     }
