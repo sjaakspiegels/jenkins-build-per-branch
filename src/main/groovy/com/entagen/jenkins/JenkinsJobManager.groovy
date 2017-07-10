@@ -83,6 +83,12 @@ class JenkinsJobManager {
         List<String> nonTemplateBranchNames = allBranchNames - templateBranchName
         List<ConcreteJob> expectedJobs = this.expectedJobs(templateJobs, nonTemplateBranchNames)
 
+        println "currentTemplateDrivenJobNames"
+        currentTemplateDrivenJobNames.each { println it}
+
+        println "nonTemplateBranchNames"
+        nonTemplateBranchNames.each { println it}
+        
         println "Expected jobs"
         expectedJobs.each { println it.jobName + "; " + it.branchName}
 
@@ -107,7 +113,6 @@ class JenkinsJobManager {
                 jenkinsApi.startJob(missingJob)
             }
         }
-
     }
 
     public void deleteDeprecatedJobs(List<String> deprecatedJobNames) {
