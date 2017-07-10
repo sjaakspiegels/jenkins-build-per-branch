@@ -30,12 +30,15 @@ class TfsApi {
 
        def list = getAllFolders(tfsCollection)
 
-       branchNames = list.findAll { it.endsWith tfsProject}
+       def list2 = list.findAll { it.endsWith tfsProject}
 
        def collection = URLDecoder.decode(tfsCollection, "UTF-8");
+
 println "Collection:"
 println collection
-       branchNames.each { it = it.replace(collection + "/","") }
+       list2.each { 
+           branchNames.add(it.replace(collection + "/","") 
+        }
 
         return branchNames
     }
