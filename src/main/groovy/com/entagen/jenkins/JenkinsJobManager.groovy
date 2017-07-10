@@ -84,7 +84,7 @@ class JenkinsJobManager {
         List<ConcreteJob> expectedJobs = this.expectedJobs(templateJobs, nonTemplateBranchNames)
 
         println "Expected jobs"
-        expectedJobs.each { println it}
+        expectedJobs.each { println it.jobName + "; " + it.branchName}
 
         createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 //        if (!noDelete) {
