@@ -101,7 +101,7 @@ class JenkinsJobManager {
     public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
         List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
         List<String> nonTemplateBranchNames = allBranchNames - templateBranchName
-        List<ConcreteJob> expectedJobs = this.expectedJobsTFS(templateJobs, nonTemplateBranchNames)
+//        List<ConcreteJob> expectedJobs = this.expectedJobsTFS(templateJobs, nonTemplateBranchNames)
 
         List<Branch> tfsBranchPaths = allBranchNames.collect { branchPath -> new Branch( branchName: this.tfsBranchToJobName(branchPath), path: branchPath)}
 
