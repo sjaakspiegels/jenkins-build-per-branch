@@ -28,7 +28,9 @@ class TfsApi {
 
        List<String> branchNames = []
 
-       def list = getAllFolders(tfsCollection)
+       def root = URLEncoder.encode(tfsCollection, "UTF-8")
+
+       def list = getAllFolders(root)
 
        branchNames = list.findAll { it.endsWith tfsProject}
 
@@ -53,7 +55,7 @@ class TfsApi {
                     
                     def path = URLEncoder.encode(it.path, "UTF-8")
                 
-                    if (it.path != rootFolder) {
+                    if (path != rootFolder) {
                         branchNames.add(it.path)
                         branchNames.addAll(getAllFolders(path))
                     }
