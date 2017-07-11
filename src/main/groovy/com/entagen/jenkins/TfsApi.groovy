@@ -46,14 +46,14 @@ class TfsApi {
 
         def values = responseJson.value
 
-        if (!values.any{elem -> elem.path.endsWith(".sln")}) {
+        if (!values.any{elem -> elem.path.endsWith("${tfsProject}.sln")}) {
 
               values.each {
                 if (it.isFolder) {
                     
                     def path = URLEncoder.encode(it.path, "UTF-8")
                 
-                    if (path != rootFolder) {
+                    if (it.path != rootFolder) {
                         branchNames.add(it.path)
                         branchNames.addAll(getAllFolders(path))
                     }
