@@ -107,7 +107,7 @@ class JenkinsJobManager {
         println "nonTemplateBranchNames"
         nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
 
-        List<ConcreteJob> expectedJobsTfs = this.expectedJobsTFS(templateJobs, nonTemplateBranchNames)
+    //    List<ConcreteJob> expectedJobsTfs = this.expectedJobsTFS(templateJobs, nonTemplateBranchNames)
 
 
         println "branch paths"
