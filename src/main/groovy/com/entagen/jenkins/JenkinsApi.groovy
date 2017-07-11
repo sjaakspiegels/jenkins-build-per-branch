@@ -10,6 +10,7 @@ import org.apache.http.HttpStatus
 import org.apache.http.HttpRequestInterceptor
 import org.apache.http.protocol.HttpContext
 import org.apache.http.HttpRequest
+import java.util.regex.Matcher
 
 class JenkinsApi {
     String jenkinsServerUrl
