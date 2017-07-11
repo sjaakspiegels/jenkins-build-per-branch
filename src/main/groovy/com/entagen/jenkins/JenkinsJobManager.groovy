@@ -108,10 +108,10 @@ class JenkinsJobManager {
         nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
 
         //List<ConcreteJob> expectedJobsTfs = expectedJobsTFS(templateJobs, nonTemplateBranchNames)
-List<String> abc = []
-List<String> defe = []
+List<TemplateJob> abc = []
+List<Branch> defe = []
 
-        List<ConcreteJob> expectedJobsTfs = halloTFS(abc, defe)
+        List<ConcreteJob> expectedJobsTfs = halloTFS(abc)
         
 //        println "Expected jobs"
 //        expectedJobs.each { println it.jobName + "; " + it.branchName}
@@ -180,7 +180,7 @@ List<String> defe = []
     }
 
 
-    public void halloTfs(List<TemplateJob> templateJobs, List<Branch> branches) {
+    public void halloTfs(List<TemplateJob> templateJobs) {
         println "HalloTfs"
     }
 
