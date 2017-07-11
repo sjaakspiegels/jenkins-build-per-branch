@@ -59,10 +59,10 @@ class JenkinsJobManager {
         List<String> allBranchNames = tfsApi.branchNames
         List<String> allJobNames = jenkinsApi.jobNames
 
-//        println "All branch names"
-//        allBranchNames.each { println it}
-//        println "All jobs"
-//        allJobNames.each { println it}
+        println "All branch names"
+        allBranchNames.each { println it}
+        println "All jobs"
+        allJobNames.each { println it}
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
         List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
