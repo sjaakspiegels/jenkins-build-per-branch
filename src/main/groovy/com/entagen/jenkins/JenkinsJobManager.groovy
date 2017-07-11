@@ -99,7 +99,7 @@ class JenkinsJobManager {
         tfsBranchPaths.each { println it.branchName + "; " + it.path}
 
         println "templateBranchName"
-        templateBranchName.each { println it.branchName }
+        println templateBranchName
 
 
         List<Branch> nonTemplateBranchNames = tfsBranchPaths.findAll { !templateBranchName.contains(it.branchName)} 
