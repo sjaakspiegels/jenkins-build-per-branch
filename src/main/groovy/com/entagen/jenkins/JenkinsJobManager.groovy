@@ -101,7 +101,6 @@ class JenkinsJobManager {
         println "templateBranchName"
         println templateBranchName
 
-
         List<Branch> nonTemplateBranchNames = tfsBranchPaths.findAll { !templateBranchName.contains(it.branchName)} 
         
         println "nonTemplateBranchNames"
@@ -151,8 +150,8 @@ class JenkinsJobManager {
         List<ConcreteJob> missingJobs = expectedJobs.findAll { !currentJobs.contains(it.jobName) }
         if (!missingJobs) return
 
-        println "Missing jobs"
-        missingJobs.each { println it.jobName + ": " + it.branchName}
+    //    println "Missing jobs"
+    //    missingJobs.each { println it.jobName + ": " + it.branchName}
 
 
         for(ConcreteJob missingJob in missingJobs) {
