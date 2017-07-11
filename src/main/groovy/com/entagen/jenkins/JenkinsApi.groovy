@@ -49,7 +49,8 @@ println jobNames
         List<String> subJobNames = []
         jobNames.each { String jobName ->
             def subResponse = get(path: "job/${jobName}/api/json")
-            if (subResponse != null) {
+            println subResponse
+            if (subResponse != null && subResponse.data != null && subResponse.data.jobs != null) {
                 subJobNames.addAll(subResponse.data.jobs.name)
             }
         }
