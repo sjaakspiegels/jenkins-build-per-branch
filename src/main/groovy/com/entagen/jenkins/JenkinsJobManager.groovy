@@ -167,12 +167,10 @@ class JenkinsJobManager {
     public void deleteDeprecatedJobs(List<String> deprecatedJobNames) {
         if (!deprecatedJobNames) return
         println "Deleting deprecated jobs:\n\t${deprecatedJobNames.join('\n\t')}"
-        deprecatedJobNames.each {
-            println it.jobName
+
+        deprecatedJobNames.each { String jobName ->
+            jenkinsApi.deleteJob(jobName)
         }
-//        deprecatedJobNames.each { String jobName ->
-//            jenkinsApi.deleteJob(jobName)
-//        }
     }
 
     public List<ConcreteJob> expectedJobs(List<TemplateJob> templateJobs, List<String> branchNames) {
