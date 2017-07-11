@@ -54,7 +54,6 @@ class TfsApi {
                     def path = URLEncoder.encode(it.path, "UTF-8")
                 
                     if (it.path != URLDecoder.decode(rootFolder, "UTF-8")) {
-                        println "lees path: ${path}"
                         branchNames.add(it.path)
                         branchNames.addAll(getAllFolders(path))
                     }

@@ -19,3 +19,4 @@ class TemplateJob {
                                                     path: branch.path )
     }
 }
+

@@ -66,8 +66,8 @@ class JenkinsJobManager {
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
         List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
-//        println "Template jobs"
-//        templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
+        println "Template jobs"
+        templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
   
           // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
         syncJobsTfs(allBranchNames, allJobNames, templateJobs)
@@ -107,16 +107,9 @@ class JenkinsJobManager {
         println "nonTemplateBranchNames"
         nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
 
-    //    List<ConcreteJob> expectedJobsTfs = this.expectedJobsTFS(templateJobs, nonTemplateBranchNames)
+        List<ConcreteJob> expectedJobsTfs = this.expectedJobsTFS(templateJobs, nonTemplateBranchNames)
 
 
-        println "branch paths"
-        tfsBranchPaths.each { println it.branchName + "; " + it.path}
-
-
-
-        println "nonTemplateBranchNames"
-        nonTemplateBranchNames.each { println it}
         
 //        println "Expected jobs"
 //        expectedJobs.each { println it.jobName + "; " + it.branchName}
@@ -177,6 +170,7 @@ class JenkinsJobManager {
     }
 
     public List<ConcreteJob> expectedJobsTfs(List<TemplateJob> templateJobs, List<Branch> branches) {
+        println "Bepaal expected jobs"
         branches.collect { Branch branch ->
             templateJobs.collect { TemplateJob templateJob -> templateJob.concreteJobForBranch(branch)}
         }.flatten()
