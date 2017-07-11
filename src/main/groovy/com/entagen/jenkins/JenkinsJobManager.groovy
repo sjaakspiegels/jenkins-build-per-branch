@@ -124,10 +124,10 @@ class JenkinsJobManager {
 //            def collection = URLDecoder.decode( tfsCollection, "UTF-8" );
 //            it.jobName = it.jobName.replace(collection + "/", "")
 //        }
-        println "Expected jobs"
-        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
+ //       println "Expected jobs"
+ //       expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
-        createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
+//        createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 //        if (!noDelete) {
 //            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
 //        }
