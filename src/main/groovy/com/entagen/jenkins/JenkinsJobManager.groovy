@@ -107,7 +107,7 @@ class JenkinsJobManager {
         println "nonTemplateBranchNames"
         nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
 
-        List<ConcreteJob> expectedJobsTfs = expectedJobsTfs(templateJobs, nonTemplateBranchNames)
+        List<ConcreteJob> expectedJobs = expectedJobsTfs(templateJobs, nonTemplateBranchNames)
         
         println "Expected jobs"
         expectedJobs.each { println it.jobName + "; " + it.branchName}
@@ -168,8 +168,6 @@ class JenkinsJobManager {
     }
 
     public List<ConcreteJob> expectedJobsTfs(List<TemplateJob> templateJobs, List<Branch> branches) {
-        println "Bepaal expected jobs"
-
         branches.collect { Branch branch ->
             templateJobs.collect { TemplateJob templateJob -> templateJob.concreteJobForBranch(branch)}
         }.flatten()
