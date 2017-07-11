@@ -53,10 +53,7 @@ class TfsApi {
                     
                     def path = URLEncoder.encode(it.path, "UTF-8")
                 
-                    println it.path + " ; " + URLDecoder.decode(rootFolder, "UTF-8")
-
                     if (it.path != URLDecoder.decode(rootFolder, "UTF-8")) {
-                        println "ongelijk"
                         branchNames.add(it.path)
                         branchNames.addAll(getAllFolders(path))
                     }
