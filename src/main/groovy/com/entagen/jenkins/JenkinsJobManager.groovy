@@ -113,9 +113,9 @@ class JenkinsJobManager {
         expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
         createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
-//        if (!noDelete) {
-//            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
-//        }
+        if (!noDelete) {
+            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
+        }
     }
 
     public String tfsBranchToJobName(String branchName)
@@ -167,9 +167,12 @@ class JenkinsJobManager {
     public void deleteDeprecatedJobs(List<String> deprecatedJobNames) {
         if (!deprecatedJobNames) return
         println "Deleting deprecated jobs:\n\t${deprecatedJobNames.join('\n\t')}"
-        deprecatedJobNames.each { String jobName ->
-            jenkinsApi.deleteJob(jobName)
+        deprecatedJobNames.each {
+            println it.jobName
         }
+//        deprecatedJobNames.each { String jobName ->
+//            jenkinsApi.deleteJob(jobName)
+//        }
     }
 
     public List<ConcreteJob> expectedJobs(List<TemplateJob> templateJobs, List<String> branchNames) {
