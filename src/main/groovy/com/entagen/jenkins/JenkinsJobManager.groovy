@@ -59,15 +59,15 @@ class JenkinsJobManager {
         List<String> allBranchNames = tfsApi.branchNames
         List<String> allJobNames = jenkinsApi.jobNames
 
-        println "All branch names"
-        allBranchNames.each { println it}
-        println "All jobs"
-        allJobNames.each { println it}
+//        println "All branch names"
+//        allBranchNames.each { println it}
+//        println "All jobs"
+//        allJobNames.each { println it}
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
         List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
-        println "Template jobs"
-        templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
+//        println "Template jobs"
+//        templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
   
           // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
         syncJobsTfs(allBranchNames, allJobNames, templateJobs)
@@ -83,15 +83,6 @@ class JenkinsJobManager {
         List<String> nonTemplateBranchNames = allBranchNames - templateBranchName
         List<ConcreteJob> expectedJobs = this.expectedJobs(templateJobs, nonTemplateBranchNames)
 
-        println "currentTemplateDrivenJobNames"
-        currentTemplateDrivenJobNames.each { println it}
-
-        println "nonTemplateBranchNames"
-        nonTemplateBranchNames.each { println it}
-        
-        println "Expected jobs"
-        expectedJobs.each { println it.jobName + "; " + it.branchName}
-
         createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
         if (!noDelete) {
             deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
@@ -100,10 +91,13 @@ class JenkinsJobManager {
 
     public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
         List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
-        List<String> nonTemplateBranchNames = allBranchNames - templateBranchName
-//        List<ConcreteJob> expectedJobs = this.expectedJobsTFS(templateJobs, nonTemplateBranchNames)
-
         List<Branch> tfsBranchPaths = allBranchNames.collect { branchPath -> new Branch( branchName: this.tfsBranchToJobName(branchPath), path: branchPath)}
+
+
+
+        List<String> nonTemplateBranchNames = allBranchNames - templateBranchName
+        List<ConcreteJob> expectedJobsTfs = this.expectedJobsTFS(templateJobs, nonTemplateBranchNames)
+
 
         println "branch paths"
         tfsBranchPaths.each { println it.branchName + "; " + it.path}
@@ -114,14 +108,14 @@ class JenkinsJobManager {
         println "nonTemplateBranchNames"
         nonTemplateBranchNames.each { println it}
         
+//        println "Expected jobs"
+//        expectedJobs.each { println it.jobName + "; " + it.branchName}
+//        expectedJobs.each { 
+//            def collection = URLDecoder.decode( tfsCollection, "UTF-8" );
+//            it.jobName = it.jobName.replace(collection + "/", "")
+//        }
         println "Expected jobs"
-        expectedJobs.each { println it.jobName + "; " + it.branchName}
-        expectedJobs.each { 
-            def collection = URLDecoder.decode( tfsCollection, "UTF-8" );
-            it.jobName = it.jobName.replace(collection + "/", "")
-        }
-        println "Expected jobs"
-        expectedJobs.each { println it.jobName + "; " + it.branchName}
+        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
         createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 //        if (!noDelete) {
@@ -135,7 +129,7 @@ class JenkinsJobManager {
         def collection = URLDecoder.decode( tfsCollection, "UTF-8" );
         
         name = name.replace(collection + "/", "")
-        name = name.replace("/" + tfsProject, "")
+        name = name.replace("/", "-")
         
         return name
     }
@@ -172,9 +166,13 @@ class JenkinsJobManager {
         }.flatten()
     }
 
-    public List<ConcreteJob> expectedJobsTfs(List<TemplateJob> templateJobs, List<String> branchNames) {
-        branchNames.collect { String branchName ->
-            templateJobs.collect { TemplateJob templateJob -> templateJob.concreteJobForBranch(branchName) }
+    public List<ConcreteJob> expectedJobsTfs(List<TemplateJob> templateJobs, List<Branch> branches) {
+        branchNames.collect { Branch branch ->
+            templateJobs.collect { TemplateJob templateJob -> {
+                                        templateJob.concreteJobForBranch(branchName)
+                                        templateJob.path = branch.path 
+                                       }
+                                 }
         }.flatten()
     }
 
