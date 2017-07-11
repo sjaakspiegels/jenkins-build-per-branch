@@ -46,7 +46,7 @@ class TfsApi {
 
         def values = responseJson.value
 
-        if (!values.any{elem -> elem.path.endsWith("${tfsProject}.sln")}) {
+        if (!values.any{elem -> elem.path.endsWith(".sln")}) {
 
               values.each {
                 if (it.isFolder) {
