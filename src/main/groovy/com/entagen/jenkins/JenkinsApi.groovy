@@ -91,8 +91,10 @@ println config
             }
         }
 println missingJob.path
-        config = config.replaceFirst("<projectPath>[^<]*</projectPath>", "<projectPath>${missingJob.path}</projectPath>")
+def replacement = Matcher.quoteReplacement(missingJob.path)
+println replacement
 
+        config = config.replaceFirst("<projectPath>[^<]*</projectPath>", "<projectPath>${replacement}</projectPath>")
         // this is in case there are other down-stream jobs that this job calls, we want to be sure we're replacing their names as well
         templateJobs.each {
             config = config.replaceAll(it.jobName, it.jobNameForBranch(missingJob.branchName))
