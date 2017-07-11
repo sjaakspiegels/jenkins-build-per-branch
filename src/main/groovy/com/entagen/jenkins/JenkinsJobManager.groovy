@@ -110,15 +110,9 @@ class JenkinsJobManager {
         List<ConcreteJob> expectedJobs = expectedJobsTfs(templateJobs, nonTemplateBranchNames)
         
         println "Expected jobs"
-        expectedJobs.each { println it.jobName + "; " + it.branchName}
-//        expectedJobs.each { 
-//            def collection = URLDecoder.decode( tfsCollection, "UTF-8" );
-//            it.jobName = it.jobName.replace(collection + "/", "")
-//        }
- //       println "Expected jobs"
- //       expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
+        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
-//        createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
+        createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 //        if (!noDelete) {
 //            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
 //        }
@@ -150,6 +144,23 @@ class JenkinsJobManager {
             if (startOnCreate) {
                 jenkinsApi.startJob(missingJob)
             }
+        }
+    }
+
+    public void createMissingJobsTfs(List<ConcreteJob> expectedJobs, List<String> currentJobs, List<TemplateJob> templateJobs) {
+        List<ConcreteJob> missingJobs = expectedJobs.findAll { !currentJobs.contains(it.jobName) }
+        if (!missingJobs) return
+
+        println "Missing jobs"
+        missingJobs.each { println it.jobName + ": " + it.branchName}
+
+
+        for(ConcreteJob missingJob in missingJobs) {
+            println "Creating missing job: ${missingJob.jobName} from ${missingJob.templateJob.jobName} with source path ${missingJob.path}"
+//            jenkinsApi.cloneJobForBranch(missingJob, templateJobs)
+//            if (startOnCreate) {
+//                jenkinsApi.startJob(missingJob)
+//            }
         }
     }
 
