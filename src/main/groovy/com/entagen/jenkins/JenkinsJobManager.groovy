@@ -180,7 +180,7 @@ List<Branch> defe = []
     }
 
 
-    public void halloTfs(List<TemplateJob> templateJobs) {
+    public void halloTfs(ArrayList<TemplateJob> templateJobs) {
         println "HalloTfs"
     }
 
