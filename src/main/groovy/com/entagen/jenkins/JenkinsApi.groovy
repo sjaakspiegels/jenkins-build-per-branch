@@ -43,23 +43,6 @@ class JenkinsApi {
         def response = get(path: 'api/json')
         def jobNames = response.data.jobs.name
 
-println jobNames        
-
-        //Recursive
-        List<String> subJobNames = []
-        jobNames.each { String jobName ->
-            def subResponse = get(path: "job/${jobName}/api/json")
-            println subResponse
-            if (subResponse != null && subResponse.data != null && subResponse.data.jobs != null) {
-                subJobNames.addAll(subResponse.data.jobs.name)
-            }
-        }
-
-        jobNames.addAll(subJobNames)
-
-println jobNames        
-
-
         if (prefix) return jobNames.findAll { it.startsWith(prefix) }
         return jobNames
     }

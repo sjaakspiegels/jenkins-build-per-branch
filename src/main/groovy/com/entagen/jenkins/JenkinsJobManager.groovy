@@ -59,15 +59,15 @@ class JenkinsJobManager {
         List<String> allBranchNames = tfsApi.branchNames
         List<String> allJobNames = jenkinsApi.jobNames
 
-        println "All branch names"
-        allBranchNames.each { println it}
-        println "All jobs"
-        allJobNames.each { println it}
+//        println "All branch names"
+//        allBranchNames.each { println it}
+//        println "All jobs"
+//        allJobNames.each { println it}
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
         List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
-        println "Template jobs"
-        templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
+//        println "Template jobs"
+//        templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
   
           // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
         syncJobsTfs(allBranchNames, allJobNames, templateJobs)
@@ -91,25 +91,25 @@ class JenkinsJobManager {
 
     public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
         List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
-        println "currentTemplateDrivenJobNames"
-        currentTemplateDrivenJobNames.each { println it}
+//        println "currentTemplateDrivenJobNames"
+//        currentTemplateDrivenJobNames.each { println it}
 
         List<Branch> tfsBranchPaths = allBranchNames.collect { branchPath -> new Branch( branchName: this.tfsBranchToJobName(branchPath), path: branchPath)}
-        println "branch paths"
-        tfsBranchPaths.each { println it.branchName + "; " + it.path}
+//        println "branch paths"
+//        tfsBranchPaths.each { println it.branchName + "; " + it.path}
 
-        println "templateBranchName"
-        println templateBranchName
+//        println "templateBranchName"
+//        println templateBranchName
 
         List<Branch> nonTemplateBranchNames = tfsBranchPaths.findAll { !templateBranchName.contains(it.branchName)} 
         
-        println "nonTemplateBranchNames"
-        nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
+//        println "nonTemplateBranchNames"
+//        nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
 
         List<ConcreteJob> expectedJobs = expectedJobsTfs(templateJobs, nonTemplateBranchNames)
         
-        println "Expected jobs"
-        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
+//        println "Expected jobs"
+//        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
         createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
         if (!noDelete) {
@@ -133,8 +133,8 @@ class JenkinsJobManager {
         List<ConcreteJob> missingJobs = expectedJobs.findAll { !currentJobs.contains(it.jobName) }
         if (!missingJobs) return
 
-        println "Missing jobs"
-        missingJobs.each { println it.jobName + ": " + it.branchName}
+ //       println "Missing jobs"
+ //       missingJobs.each { println it.jobName + ": " + it.branchName}
 
 
         for(ConcreteJob missingJob in missingJobs) {
@@ -213,17 +213,17 @@ class JenkinsJobManager {
     public void syncViews(List<String> allBranchNames) {
         List<String> existingViewNames = jenkinsApi.getViewNames(this.nestedView)
 
-println "Existing ViewNames"
-existingViewNames.each { println it }
+//println "Existing ViewNames"
+//existingViewNames.each { println it }
 
         List<BranchView> expectedBranchViews = allBranchNames.collect { String branchName -> new BranchView(branchName: branchName, templateJobPrefix: this.templateJobPrefix) }
 
-println "Expected ViewNames"
-expectedBranchViews.each { println it.branchName }
+//println "Expected ViewNames"
+//expectedBranchViews.each { println it.branchName }
 
         List<BranchView> missingBranchViews = expectedBranchViews.findAll { BranchView branchView -> !existingViewNames.contains(branchView.viewName)}
-println "Missing ViewNames"
-missingBranchViews.each { println it.branchName }
+//println "Missing ViewNames"
+//missingBranchViews.each { println it.branchName }
 
 //        addMissingViews(missingBranchViews)
 
