@@ -28,9 +28,7 @@ class TfsApi {
 
        List<String> branchNames = []
 
-       def root = URLEncoder.encode(tfsCollection, "UTF-8")
-
-       def list = getAllFolders(root)
+       def list = getAllFolders(tfsCollection)
 
        branchNames = list.findAll { it.endsWith tfsProject}
 
@@ -43,7 +41,7 @@ class TfsApi {
         String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${rootFolder}"
 
         def response = [ 'bash', '-c', "curl ${command}" ].execute().text
- println response       
+       
         def responseJson = new JsonSlurper().parseText(response)
 
         def values = responseJson.value
@@ -55,6 +53,8 @@ class TfsApi {
                     
                     def path = URLEncoder.encode(it.path, "UTF-8")
                 
+                    println path + " ; " + it.path + " ; " + rootFolder
+
                     if (path != rootFolder) {
                         branchNames.add(it.path)
                         branchNames.addAll(getAllFolders(path))
