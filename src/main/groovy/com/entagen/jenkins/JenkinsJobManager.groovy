@@ -91,6 +91,9 @@ class JenkinsJobManager {
 
     public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
         List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
+        println "currentTemplateDrivenJobNames"
+        currentTemplateDrivenJobNames.each { println it}
+
         List<Branch> tfsBranchPaths = allBranchNames.collect { branchPath -> new Branch( branchName: this.tfsBranchToJobName(branchPath), path: branchPath)}
         println "branch paths"
         tfsBranchPaths.each { println it.branchName + "; " + it.path}
@@ -110,8 +113,7 @@ class JenkinsJobManager {
         println "branch paths"
         tfsBranchPaths.each { println it.branchName + "; " + it.path}
 
-        println "currentTemplateDrivenJobNames"
-        currentTemplateDrivenJobNames.each { println it}
+
 
         println "nonTemplateBranchNames"
         nonTemplateBranchNames.each { println it}
@@ -175,7 +177,7 @@ class JenkinsJobManager {
     }
 
     public List<ConcreteJob> expectedJobsTfs(List<TemplateJob> templateJobs, List<Branch> branches) {
-        branchNames.collect { Branch branch ->
+        branches.collect { Branch branch ->
             templateJobs.collect { TemplateJob templateJob -> templateJob.concreteJobForBranch(branch)}
         }.flatten()
     }
