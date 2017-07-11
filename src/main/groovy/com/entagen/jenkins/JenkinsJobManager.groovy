@@ -168,11 +168,7 @@ class JenkinsJobManager {
 
     public List<ConcreteJob> expectedJobsTfs(List<TemplateJob> templateJobs, List<Branch> branches) {
         branchNames.collect { Branch branch ->
-            templateJobs.collect { TemplateJob templateJob -> {
-                                        templateJob.concreteJobForBranch(branchName)
-                                        templateJob.path = branch.path 
-                                       }
-                                 }
+            templateJobs.collect { TemplateJob templateJob -> templateJob.concreteJobForBranch(branch)}
         }.flatten()
     }
 

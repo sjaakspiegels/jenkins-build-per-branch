@@ -12,7 +12,10 @@ class TemplateJob {
         return "$baseJobName-$safeBranchName"
     }
     
-    ConcreteJob concreteJobForBranch(String branchName) {
-        ConcreteJob concreteJob = new ConcreteJob(templateJob: this, branchName: branchName, jobName: jobNameForBranch(branchName) )
+    ConcreteJob concreteJobForBranch(Branch branch) {
+        ConcreteJob concreteJob = new ConcreteJob(  templateJob: this, 
+                                                    branchName: branch.branchName, 
+                                                    jobName: jobNameForBranch(branch.branchName), 
+                                                    path: branch.path )
     }
 }
