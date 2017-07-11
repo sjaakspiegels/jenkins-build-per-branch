@@ -48,7 +48,7 @@ println jobNames
         //Recursive
         List<String> subJobNames = []
         jobNames.each { String jobName ->
-            def subResponse = get(path: 'job/${jobName}api/json')
+            def subResponse = get(path: "job/${jobName}/api/json")
             subJobNames.addAll(subResponse.data.jobs.name)
         }
 
