@@ -56,15 +56,15 @@ class JenkinsApi {
         TemplateJob templateJob = missingJob.templateJob
 
         //Copy job with jenkins copy job api, this will make sure jenkins plugins get the call to make a copy if needed (promoted builds plugin needs this)
-        post('createItem', missingJobConfig, [name: missingJob.jobName, mode: 'copy', from: templateJob.jobName], ContentType.XML)
+ //       post('createItem', missingJobConfig, [name: missingJob.jobName, mode: 'copy', from: templateJob.jobName], ContentType.XML)
 
-        post('job/' + missingJob.jobName + "/config.xml", missingJobConfig, [:], ContentType.XML)
+ //       post('job/' + missingJob.jobName + "/config.xml", missingJobConfig, [:], ContentType.XML)
         //Forced disable enable to work around Jenkins' automatic disabling of clones jobs
         //But only if the original job was enabled
-        post('job/' + missingJob.jobName + '/disable')
-        if (!missingJobConfig.contains("<disabled>true</disabled>")) {
-            post('job/' + missingJob.jobName + '/enable')
-        }
+  //      post('job/' + missingJob.jobName + '/disable')
+  //      if (!missingJobConfig.contains("<disabled>true</disabled>")) {
+  //          post('job/' + missingJob.jobName + '/enable')
+  //      }
     }
 
     void startJob(ConcreteJob job) {
@@ -75,6 +75,8 @@ class JenkinsApi {
     String configForMissingJob(ConcreteJob missingJob, List<TemplateJob> templateJobs) {
         TemplateJob templateJob = missingJob.templateJob
         String config = getJobConfig(templateJob.jobName)
+
+println config
 
         def ignoreTags = ["assignedNode"]
 
@@ -93,7 +95,9 @@ class JenkinsApi {
         templateJobs.each {
             config = config.replaceAll(it.jobName, it.jobNameForBranch(missingJob.branchName))
         }
-
+println "======================================================="
+println config
+println "======================================================="
         return config
     }
 
