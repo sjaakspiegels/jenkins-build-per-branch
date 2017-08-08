@@ -117,6 +117,8 @@ class JenkinsJobManager {
         println "=== Delete deprecated jobs ==="
         (currentTemplateDrivenJobNames - expectedJobs.jobName).each { println it}
 
+        println noDelete
+
         if (!noDelete) {
             deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
         }
