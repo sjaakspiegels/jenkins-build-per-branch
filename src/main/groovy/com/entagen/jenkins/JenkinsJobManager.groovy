@@ -169,13 +169,11 @@ class JenkinsJobManager {
     }
 
     public void deleteDeprecatedJobs(List<String> deprecatedJobNames) {
-        println "Delete jobs"
         if (!deprecatedJobNames) return
         println "Deleting deprecated jobs:\n\t${deprecatedJobNames.join('\n\t')}"
 
         deprecatedJobNames.each { String jobName ->
-        println jobName
-//            jenkinsApi.deleteJob(jobName)
+            jenkinsApi.deleteJob(jobName)
         }
     }
 
