@@ -36,6 +36,8 @@ class JenkinsJobManager {
             println noDelete
             this."${property.key}" = property.value
             println property
+            println property.key
+            println property.value
             println this."${property.key}"
             println "=== 2 props noDelete ==="
             println noDelete
