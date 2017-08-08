@@ -109,6 +109,13 @@ class JenkinsJobManager {
         println "currentTemplateDrivenJobNames"
         currentTemplateDrivenJobNames.each { println it}
         
+        List<String> filteredCurrentTemplateDrivenJobNames = currentTemplateDrivenJobNames.findAll { it.endsWith tfsProject }
+        println "filteredCurrentTemplateDrivenJobNames"
+        filteredCurrentTemplateDrivenJobNames.each { println it}
+
+        return (allJobNames - templateJobNames).findAll { String jobName ->
+            templateBaseJobNames.find { String baseJobName -> jobName.startsWith(baseJobName)}
+
         println "Expected jobs"
         expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
