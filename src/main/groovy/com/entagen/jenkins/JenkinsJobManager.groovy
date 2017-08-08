@@ -31,7 +31,10 @@ class JenkinsJobManager {
         tfsCollection = ""
         for (property in props) {
             this."${property.key}" = property.value
+            println property
         }
+        println "=== noDelete ==="
+        println noDelete
         initJenkinsApi()
         println "=== noDelete ==="
         println noDelete
