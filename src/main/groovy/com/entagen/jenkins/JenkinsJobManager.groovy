@@ -114,7 +114,7 @@ class JenkinsJobManager {
 
         createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 
-        println "Delete missing jobs"
+        println "Delete deprecated jobs"
         (currentTemplateDrivenJobNames - expectedJobs.jobName).each { println it}
 
         if (!noDelete) {
