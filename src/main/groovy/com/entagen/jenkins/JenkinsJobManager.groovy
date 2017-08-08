@@ -169,6 +169,7 @@ class JenkinsJobManager {
     }
 
     public void deleteDeprecatedJobs(List<String> deprecatedJobNames) {
+        println "Delete jobs"
         if (!deprecatedJobNames) return
         println "Deleting deprecated jobs:\n\t${deprecatedJobNames.join('\n\t')}"
 
