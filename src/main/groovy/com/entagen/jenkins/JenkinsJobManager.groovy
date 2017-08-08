@@ -59,10 +59,10 @@ class JenkinsJobManager {
         List<String> allBranchNames = tfsApi.branchNames
         List<String> allJobNames = jenkinsApi.jobNames
 
-//        println "All branch names"
-//        allBranchNames.each { println it}
-//        println "All jobs"
-//        allJobNames.each { println it}
+        println "All branch names"
+        allBranchNames.each { println it}
+        println "All jobs"
+        allJobNames.each { println it}
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
         List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
@@ -91,12 +91,10 @@ class JenkinsJobManager {
 
     public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
         List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
-//        println "currentTemplateDrivenJobNames"
-//        currentTemplateDrivenJobNames.each { println it}
 
         List<Branch> tfsBranchPaths = allBranchNames.collect { branchPath -> new Branch( branchName: this.tfsBranchToJobName(branchPath), path: branchPath)}
-//        println "branch paths"
-//        tfsBranchPaths.each { println it.branchName + "; " + it.path}
+        println "branch paths"
+        tfsBranchPaths.each { println it.branchName + "; " + it.path}
 
 //        println "templateBranchName"
 //        println templateBranchName
@@ -107,9 +105,12 @@ class JenkinsJobManager {
 //        nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
 
         List<ConcreteJob> expectedJobs = expectedJobsTfs(templateJobs, nonTemplateBranchNames)
+
+        println "currentTemplateDrivenJobNames"
+        currentTemplateDrivenJobNames.each { println it}
         
-//        println "Expected jobs"
-//        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
+        println "Expected jobs"
+        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
         createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
         if (!noDelete) {
