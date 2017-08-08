@@ -29,6 +29,8 @@ class JenkinsJobManager {
 
     JenkinsJobManager(Map props) {
         tfsCollection = ""
+        println "=== voor props noDelete ==="
+        println noDelete
         for (property in props) {
             this."${property.key}" = property.value
             println property
