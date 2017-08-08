@@ -35,7 +35,7 @@ class JenkinsJobManager {
         }
         println "=== noDelete ==="
         println noDelete
-        println tfsToken
+        println tfsProject
         initJenkinsApi()
     }
 
@@ -59,8 +59,6 @@ class JenkinsJobManager {
 
 	void syncWithTfs() {
         initTfsApi()
-        println "=== noDelete ==="
-        println noDelete
 
         List<String> allBranchNames = tfsApi.branchNames
         List<String> allJobNames = jenkinsApi.jobNames
@@ -122,8 +120,6 @@ class JenkinsJobManager {
 
         println "=== Delete deprecated jobs ==="
         (currentTemplateDrivenJobNames - expectedJobs.jobName).each { println it}
-
-        println noDelete
 
         if (!noDelete) {
             deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
