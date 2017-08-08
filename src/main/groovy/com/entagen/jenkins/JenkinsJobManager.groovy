@@ -108,15 +108,15 @@ class JenkinsJobManager {
 
         println "currentTemplateDrivenJobNames"
         currentTemplateDrivenJobNames.each { println it}
-        
-        List<String> filteredCurrentTemplateDrivenJobNames = currentTemplateDrivenJobNames.findAll { it.endsWith(tfsProject) }
-        println "filteredCurrentTemplateDrivenJobNames"
-        filteredCurrentTemplateDrivenJobNames.each { println it}
 
-         println "Expected jobs"
+        println "Expected jobs"
         expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
         createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
+
+        println "Delete missing jobs"
+        (currentTemplateDrivenJobNames - expectedJobs.jobName).each { println it}
+
         if (!noDelete) {
             deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
         }
