@@ -174,7 +174,8 @@ class JenkinsJobManager {
         println "Deleting deprecated jobs:\n\t${deprecatedJobNames.join('\n\t')}"
 
         deprecatedJobNames.each { String jobName ->
-            jenkinsApi.deleteJob(jobName)
+        println jobName
+//            jenkinsApi.deleteJob(jobName)
         }
     }
 
