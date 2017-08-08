@@ -194,9 +194,9 @@ class JenkinsJobManager {
         List<String> templateJobNames = templateJobs.jobName
         List<String> templateBaseJobNames = templateJobs.baseJobName
 
-        // don't want actual template jobs, just the jobs that were created from the templates
+        // don't want actual template jobs, just the jobs that were created from the templates and project
         return (allJobNames - templateJobNames).findAll { String jobName ->
-            templateBaseJobNames.find { String baseJobName -> jobName.startsWith(baseJobName)}
+            templateBaseJobNames.find { String baseJobName -> jobName.startsWith(baseJobName)} && jobName.endsWith(tfsProject)
         }
     }
 
