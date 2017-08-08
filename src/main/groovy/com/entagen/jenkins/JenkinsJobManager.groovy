@@ -35,9 +35,8 @@ class JenkinsJobManager {
         }
         println "=== noDelete ==="
         println noDelete
+        println tfsToken
         initJenkinsApi()
-        println "=== noDelete ==="
-        println noDelete
     }
 
     void syncWithRepo() {
