@@ -31,6 +31,7 @@ class JenkinsJobManager {
         tfsCollection = ""
         for (property in props) {
             this."${property.key}" = property.value
+            println property
         }
         initJenkinsApi()
     }
