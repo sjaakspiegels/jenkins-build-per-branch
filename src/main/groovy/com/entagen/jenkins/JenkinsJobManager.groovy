@@ -109,7 +109,7 @@ class JenkinsJobManager {
         println "currentTemplateDrivenJobNames"
         currentTemplateDrivenJobNames.each { println it}
         
-        List<String> filteredCurrentTemplateDrivenJobNames = currentTemplateDrivenJobNames.findAll { it.endsWith tfsProject }
+        List<String> filteredCurrentTemplateDrivenJobNames = currentTemplateDrivenJobNames.findAll { it.endsWith(tfsProject) }
         println "filteredCurrentTemplateDrivenJobNames"
         filteredCurrentTemplateDrivenJobNames.each { println it}
 
