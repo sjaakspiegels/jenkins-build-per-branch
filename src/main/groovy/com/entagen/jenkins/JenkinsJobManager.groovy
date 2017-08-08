@@ -59,7 +59,7 @@ class JenkinsJobManager {
         List<String> allBranchNames = tfsApi.branchNames
         List<String> allJobNames = jenkinsApi.jobNames
 
-        println "All branch names"
+        println "=== All branch names ==="
         allBranchNames.each { println it}
 //        println "All jobs"
 //        allJobNames.each { println it}
@@ -106,15 +106,15 @@ class JenkinsJobManager {
 
         List<ConcreteJob> expectedJobs = expectedJobsTfs(templateJobs, nonTemplateBranchNames)
 
-        println "currentTemplateDrivenJobNames"
+        println "=== CurrentTemplateDrivenJobNames ==="
         currentTemplateDrivenJobNames.each { println it}
 
-        println "Expected jobs"
+        println "=== Expected jobs ==="
         expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
         createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 
-        println "Delete deprecated jobs"
+        println "=== Delete deprecated jobs ==="
         (currentTemplateDrivenJobNames - expectedJobs.jobName).each { println it}
 
         if (!noDelete) {
