@@ -64,7 +64,7 @@ class JenkinsJobManager {
             println "=== Project: " + it + " ======================="
             String projectTemplateName = templateBranchName + "-" + it
 
-            List<String> projectBranchNames = allBranchNames.findAll { it.endsWith projectName}
+            List<String> projectBranchNames = allBranchNames.findAll { it.endsWith it}
 
             println "=== Project branch names ==="
             projectBranchNames.each { println it}
