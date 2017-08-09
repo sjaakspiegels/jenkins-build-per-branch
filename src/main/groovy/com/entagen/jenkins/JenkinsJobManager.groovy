@@ -32,6 +32,12 @@ class JenkinsJobManager {
         for (property in props) {
             this."${property.key}" = property.value
         }
+
+        Map<String, String> env = System.getenv();
+        for (String envName : env.keySet()) {
+            println envName + ": " + env.get(envName)
+        }
+
         initJenkinsApi()
     }
 
