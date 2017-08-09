@@ -43,9 +43,9 @@ class JenkinsJobManager {
             this.tfsToken = env.get("TFSTOKEN")
         }
 
-        println jenkinsUser
-        println jenkinsPassword
-        println tfsToken
+        println this.jenkinsUser
+        println this.jenkinsPassword
+        println this.tfsToken
 
 
         initJenkinsApi()
