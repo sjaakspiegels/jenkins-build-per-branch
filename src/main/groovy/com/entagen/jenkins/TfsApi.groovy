@@ -100,7 +100,7 @@ class TfsApi {
             }
         }
         else {
-            branchNames.add(URLEncoder.decode(rootFolder, "UTF-8"))
+            branchNames.add(URLDecoder.decode(rootFolder, "UTF-8"))
         }
 
         return branchNames
