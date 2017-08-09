@@ -33,6 +33,8 @@ class JenkinsJobManager {
             this."${property.key}" = property.value
         }
 
+        Map<String, String> env = System.getenv();
+
         if (env.get("JENKINSUSER") != null) {
             this.jenkinsUser = env.get("JENKINSUSER")
         }
