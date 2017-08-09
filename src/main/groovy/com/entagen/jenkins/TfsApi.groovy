@@ -63,15 +63,11 @@ class TfsApi {
     }
 
 
-    public List<String> branchNames(String projectName) {
+    public List<String> allBranchNames() {
 
        List<String> branchNames = []
 
-       def list = getAllSubFolders(tfsCollection)
-
-       branchNames = list.findAll { it.endsWith projectName}
-
-        return branchNames
+       return getAllSubFolders(tfsCollection)
     }
 
     public List<String> getAllSubFolders(String rootFolder) {

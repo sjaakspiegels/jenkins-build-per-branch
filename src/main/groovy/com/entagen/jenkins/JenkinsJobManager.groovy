@@ -56,18 +56,18 @@ class JenkinsJobManager {
         println "Projects:"
         projectlist.each { println it}
 
+        List<String> allBranchNames = tfsApi.allBranchNames
+        println "=== All branch names ==="
+        allBranchNames.each { println it}
+
         projectlist.each {
             println "=== Project: " + it + " ======================="
             String projectTemplateName = templateBranchName + "-" + it
-            List<String> allBranchNames = tfsApi.branchNamesFromProject(it)
 
-            println "=== All branch names ==="
-            allBranchNames.each { println it}
+            List<String> projectBranchNames = allBranchNames.findAll { it.endsWith projectName}
 
-            List<String> allBranchNames2 = tfsApi.branchNames(it)
-
-            println "=== All branch names2 ==="
-            allBranchNames2.each { println it}
+            println "=== Project branch names ==="
+            projectBranchNames.each { println it}
 
             // ensure that there is at least one job matching the template pattern, collect the set of template jobs
             List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, it, projectTemplateName)
@@ -75,11 +75,11 @@ class JenkinsJobManager {
  //           templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
     
             // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
-            syncJobsTfs(allBranchNames, allJobNames, templateJobs, projectTemplateName, it)
+  //          syncJobsTfs(projectBranchNames, allJobNames, templateJobs, projectTemplateName, it)
 
             // create any missing branch views, scoped within a nested view if we were given one
-            if (!noViews) {
-                syncViews(allBranchNames)
+  //          if (!noViews) {
+  //              syncViews(projectBranchNames)
             }
         }
     }
