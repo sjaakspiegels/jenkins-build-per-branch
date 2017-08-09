@@ -24,7 +24,6 @@ class JenkinsJobManager {
     Boolean startOnCreate = false
 
     JenkinsApi jenkinsApi
-    GitApi gitApi
 	TfsApi tfsApi;
 
     JenkinsJobManager(Map props) {
@@ -46,24 +45,6 @@ class JenkinsJobManager {
         }
 
         initJenkinsApi()
-    }
-
-    void syncWithRepo() {
-        initGitApi()
-
-        List<String> allBranchNames = gitApi.branchNames
-        List<String> allJobNames = jenkinsApi.jobNames
-
-        // ensure that there is at least one job matching the template pattern, collect the set of template jobs
-        List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
-
-        // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
-        syncJobs(allBranchNames, allJobNames, templateJobs)
-
-        // create any missing branch views, scoped within a nested view if we were given one
-        if (!noViews) {
-            syncViews(allBranchNames)
-        }
     }
 
 	void syncWithTfs() {
@@ -215,23 +196,8 @@ class JenkinsJobManager {
         }
     }
 
-    List<TemplateJob> findRequiredTemplateJobs(List<String> allJobNames) {
-        String regex = /^($templateJobPrefix-[^-]*)-($templateBranchName)$/
-
-        List<TemplateJob> templateJobs = allJobNames.findResults { String jobName ->
-            TemplateJob templateJob = null
-            jobName.find(regex) { full, baseJobName, branchName ->
-                templateJob = new TemplateJob(jobName: full, baseJobName: baseJobName, templateBranchName: branchName)
-            }
-            return templateJob
-        }
-
-        assert templateJobs?.size() > 0, "Unable to find any jobs matching template regex: $regex\nYou need at least one job to match the templateJobPrefix and templateBranchName suffix arguments"
-        return templateJobs
-    }
-
     List<TemplateJob> findRequiredTemplateJobsFromProject(List<String> allJobNames, String projectName) {
-        String templateName = "Main-" + projectName
+        String templateName = templateBranchName + "-" + projectName
         String regex = /^($templateJobPrefix-[^-]*)-($templateName)$/
 
         List<TemplateJob> templateJobs = allJobNames.findResults { String jobName ->
@@ -304,18 +270,6 @@ class JenkinsJobManager {
         }
 
         return this.jenkinsApi
-    }
-
-    GitApi initGitApi() {
-        if (!gitApi) {
-            assert gitUrl != null
-            this.gitApi = new GitApi(gitUrl: gitUrl)
-            if (this.branchNameRegex){
-                this.gitApi.branchNameFilter = ~this.branchNameRegex
-            }
-        }
-
-        return this.gitApi
     }
 
 	TfsApi initTfsApi() {
