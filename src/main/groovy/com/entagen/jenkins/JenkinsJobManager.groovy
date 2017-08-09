@@ -97,21 +97,21 @@ class JenkinsJobManager {
 
         List<Branch> nonTemplateBranchNames = tfsBranchPaths.findAll { !projectTemplateName.contains(it.branchName)} 
         
-        println "nonTemplateBranchNames"
-        nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
+//        println "nonTemplateBranchNames"
+//        nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
 
         List<ConcreteJob> expectedJobs = expectedJobsTfs(templateJobs, nonTemplateBranchNames)
 
-        println "=== CurrentTemplateDrivenJobNames ==="
-        currentTemplateDrivenJobNames.each { println it}
+//        println "=== CurrentTemplateDrivenJobNames ==="
+//        currentTemplateDrivenJobNames.each { println it}
 
-        println "=== Expected jobs ==="
-        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
+//        println "=== Expected jobs ==="
+//        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
-//        createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
+        createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 
-        println "=== Delete deprecated jobs ==="
-        (currentTemplateDrivenJobNames - expectedJobs.jobName).each { println it}
+//        println "=== Delete deprecated jobs ==="
+//        (currentTemplateDrivenJobNames - expectedJobs.jobName).each { println it}
 
         if (!noDelete) {
             deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
@@ -140,10 +140,10 @@ class JenkinsJobManager {
 
         for(ConcreteJob missingJob in missingJobs) {
             println "Creating missing job: ${missingJob.jobName} from ${missingJob.templateJob.jobName}"
-            jenkinsApi.cloneJobForBranch(missingJob, templateJobs)
-            if (startOnCreate) {
-                jenkinsApi.startJob(missingJob)
-            }
+//            jenkinsApi.cloneJobForBranch(missingJob, templateJobs)
+//            if (startOnCreate) {
+//                jenkinsApi.startJob(missingJob)
+//            }
         }
     }
 
