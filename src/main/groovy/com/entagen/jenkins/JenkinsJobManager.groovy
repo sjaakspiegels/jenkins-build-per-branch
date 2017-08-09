@@ -51,6 +51,7 @@ class JenkinsJobManager {
 
         initTfsApi()
 
+        String projectTemplateName = templateBranchName + "-" + projectName
         List<String> allBranchNames = tfsApi.branchNamesFromProject(tfsProject)
         List<String> allJobNames = jenkinsApi.jobNames
 
@@ -60,10 +61,9 @@ class JenkinsJobManager {
         allJobNames.each { println it}
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
-//        List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
         List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, tfsProject)
-//        println "Template jobs"
-//        templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
+        println "Template jobs"
+        templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
   
           // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
         syncJobsTfs(allBranchNames, allJobNames, templateJobs)
@@ -74,18 +74,7 @@ class JenkinsJobManager {
         }
     }
 
-    public void syncJobs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
-        List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
-        List<String> nonTemplateBranchNames = allBranchNames - templateBranchName
-        List<ConcreteJob> expectedJobs = this.expectedJobs(templateJobs, nonTemplateBranchNames)
-
-        createMissingJobs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
-        if (!noDelete) {
-            deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
-        }
-    }
-
-    public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs) {
+    public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs, String projectTemplateName) {
         List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
 
         List<Branch> tfsBranchPaths = allBranchNames.collect { branchPath -> new Branch( branchName: this.tfsBranchToJobName(branchPath), path: branchPath)}
@@ -95,10 +84,10 @@ class JenkinsJobManager {
 //        println "templateBranchName"
 //        println templateBranchName
 
-        List<Branch> nonTemplateBranchNames = tfsBranchPaths.findAll { !templateBranchName.contains(it.branchName)} 
+        List<Branch> nonTemplateBranchNames = tfsBranchPaths.findAll { !projectTemplateName.contains(it.branchName)} 
         
-//        println "nonTemplateBranchNames"
-//        nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
+        println "nonTemplateBranchNames"
+        nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
 
         List<ConcreteJob> expectedJobs = expectedJobsTfs(templateJobs, nonTemplateBranchNames)
 
