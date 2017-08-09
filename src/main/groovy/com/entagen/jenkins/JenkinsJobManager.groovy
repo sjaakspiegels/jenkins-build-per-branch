@@ -51,25 +51,23 @@ class JenkinsJobManager {
 
         initTfsApi()
         List<String> allJobNames = jenkinsApi.jobNames
-        println "All jobs"
-        allJobNames.each { println it}
-
 
         List<String> projectlist = new ArrayList<String>(Arrays.asList(tfsProject.split(",")));
         println "Projects:"
         projectlist.each { println it}
 
         projectlist.each {
+            println "=== Project: " + it + " ======================="
             String projectTemplateName = templateBranchName + "-" + it
             List<String> allBranchNames = tfsApi.branchNamesFromProject(it)
 
-            println "=== All branch names ==="
-            allBranchNames.each { println it}
+//            println "=== All branch names ==="
+//            allBranchNames.each { println it}
 
             // ensure that there is at least one job matching the template pattern, collect the set of template jobs
             List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, it, projectTemplateName)
-            println "Template jobs"
-            templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
+ //           println "Template jobs"
+ //           templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
     
             // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
             syncJobsTfs(allBranchNames, allJobNames, templateJobs, projectTemplateName, it)
