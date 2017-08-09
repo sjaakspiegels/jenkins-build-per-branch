@@ -67,8 +67,8 @@ class JenkinsJobManager {
 
             List<String> projectBranchNames = allBranchNames.findAll { it.endsWith projectName}
 
-            println "=== Project branch names ==="
-            projectBranchNames.each { println it}
+//            println "=== Project branch names ==="
+//            projectBranchNames.each { println it}
 
             // ensure that there is at least one job matching the template pattern, collect the set of template jobs
             List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, projectName, projectTemplateName)
@@ -76,7 +76,7 @@ class JenkinsJobManager {
  //           templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
     
             // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
-  //          syncJobsTfs(projectBranchNames, allJobNames, templateJobs, projectTemplateName, it)
+            syncJobsTfs(projectBranchNames, allJobNames, templateJobs, projectTemplateName, it)
 
             // create any missing branch views, scoped within a nested view if we were given one
             if (!noViews) {
@@ -97,21 +97,21 @@ class JenkinsJobManager {
 
         List<Branch> nonTemplateBranchNames = tfsBranchPaths.findAll { !projectTemplateName.contains(it.branchName)} 
         
-//        println "nonTemplateBranchNames"
-//        nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
+        println "nonTemplateBranchNames"
+        nonTemplateBranchNames.each { println it.branchName + "; " + it.path}
 
         List<ConcreteJob> expectedJobs = expectedJobsTfs(templateJobs, nonTemplateBranchNames)
 
-//        println "=== CurrentTemplateDrivenJobNames ==="
-//        currentTemplateDrivenJobNames.each { println it}
+        println "=== CurrentTemplateDrivenJobNames ==="
+        currentTemplateDrivenJobNames.each { println it}
 
-//        println "=== Expected jobs ==="
-//        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
+        println "=== Expected jobs ==="
+        expectedJobs.each { println it.jobName + "; " + it.branchName + "; " + it.path}
 
-        createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
+//        createMissingJobsTfs(expectedJobs, currentTemplateDrivenJobNames, templateJobs)
 
-//        println "=== Delete deprecated jobs ==="
-//        (currentTemplateDrivenJobNames - expectedJobs.jobName).each { println it}
+        println "=== Delete deprecated jobs ==="
+        (currentTemplateDrivenJobNames - expectedJobs.jobName).each { println it}
 
         if (!noDelete) {
             deleteDeprecatedJobs(currentTemplateDrivenJobNames - expectedJobs.jobName)
