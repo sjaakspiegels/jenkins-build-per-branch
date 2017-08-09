@@ -22,7 +22,7 @@ class TfsApi {
 	String tfsToken
     Pattern branchNameFilter = null
 
-    public List<String> getBranchNamesFromProject(String projectName) {
+    public List<String> branchNamesFromProject(String projectName) {
 
        List<String> branchNames = []
 
