@@ -57,8 +57,8 @@ class JenkinsJobManager {
         projectlist.each { println "* " + it}
 
         List<String> allBranchNames = tfsApi.allBranchNames()
-        println "=== All branch names ==="
-        allBranchNames.each { println it}
+//        println "=== All branch names ==="
+//        allBranchNames.each { println it}
 
         projectlist.each {
             String projectName = it
@@ -140,10 +140,10 @@ class JenkinsJobManager {
 
         for(ConcreteJob missingJob in missingJobs) {
             println "Creating missing job: ${missingJob.jobName} from ${missingJob.templateJob.jobName}"
-//            jenkinsApi.cloneJobForBranch(missingJob, templateJobs)
-//            if (startOnCreate) {
-//                jenkinsApi.startJob(missingJob)
-//            }
+            jenkinsApi.cloneJobForBranch(missingJob, templateJobs)
+            if (startOnCreate) {
+                jenkinsApi.startJob(missingJob)
+            }
         }
     }
 
@@ -168,9 +168,9 @@ class JenkinsJobManager {
         if (!deprecatedJobNames) return
         println "Deleting deprecated jobs:\n\t${deprecatedJobNames.join('\n\t')}"
 
-//        deprecatedJobNames.each { String jobName ->
-//            jenkinsApi.deleteJob(jobName)
-//        }
+        deprecatedJobNames.each { String jobName ->
+            jenkinsApi.deleteJob(jobName)
+        }
     }
 
     public List<ConcreteJob> expectedJobs(List<TemplateJob> templateJobs, List<String> branchNames) {
