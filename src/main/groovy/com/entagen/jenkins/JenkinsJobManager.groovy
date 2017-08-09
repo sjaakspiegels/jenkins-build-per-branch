@@ -78,8 +78,8 @@ class JenkinsJobManager {
   //          syncJobsTfs(projectBranchNames, allJobNames, templateJobs, projectTemplateName, it)
 
             // create any missing branch views, scoped within a nested view if we were given one
-  //          if (!noViews) {
-  //              syncViews(projectBranchNames)
+            if (!noViews) {
+                syncViews(projectBranchNames)
             }
         }
     }
