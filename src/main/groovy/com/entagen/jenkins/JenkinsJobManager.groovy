@@ -33,10 +33,20 @@ class JenkinsJobManager {
             this."${property.key}" = property.value
         }
 
-        Map<String, String> env = System.getenv();
-        for (String envName : env.keySet()) {
-            println envName + ": " + env.get(envName)
+        if (env.get("JENKINSUSER") != null) {
+            this.jenkinsUser = env.get("JENKINSUSER")
         }
+        if (env.get("JENKINSPASSWORD") != null) {
+            this.jenkinsPassword = env.get("JENKINSPASSWORD")
+        }
+        if (env.get("TFSTOKEN") != null) {
+            this.tfsToken = env.get("TFSTOKEN")
+        }
+
+        println jenkinsUser
+        println jenkinsPassword
+        println tfsToken
+
 
         initJenkinsApi()
     }
