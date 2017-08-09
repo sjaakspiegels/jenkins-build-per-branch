@@ -67,12 +67,12 @@ class JenkinsJobManager {
             allBranchNames.each { println it}
 
             // ensure that there is at least one job matching the template pattern, collect the set of template jobs
-            List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, tfsProject, projectTemplateName)
+            List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, it, projectTemplateName)
             println "Template jobs"
             templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
     
             // create any missing template jobs and delete any jobs matching the template patterns that no longer have branches
-            syncJobsTfs(allBranchNames, allJobNames, templateJobs, projectTemplateName)
+            syncJobsTfs(allBranchNames, allJobNames, templateJobs, projectTemplateName, it)
 
             // create any missing branch views, scoped within a nested view if we were given one
             if (!noViews) {
@@ -81,8 +81,8 @@ class JenkinsJobManager {
         }
     }
 
-    public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs, String projectTemplateName) {
-        List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames)
+    public void syncJobsTfs(List<String> allBranchNames, List<String> allJobNames, List<TemplateJob> templateJobs, String projectTemplateName, String projectName) {
+        List<String> currentTemplateDrivenJobNames = templateDrivenJobNames(templateJobs, allJobNames, projectName)
 
         List<Branch> tfsBranchPaths = allBranchNames.collect { branchPath -> new Branch( branchName: this.tfsBranchToJobName(branchPath), path: branchPath)}
 //        println "branch paths"
@@ -182,13 +182,13 @@ class JenkinsJobManager {
     }
 
 
-    public List<String> templateDrivenJobNames(List<TemplateJob> templateJobs, List<String> allJobNames) {
+    public List<String> templateDrivenJobNames(List<TemplateJob> templateJobs, List<String> allJobNames, String projectName) {
         List<String> templateJobNames = templateJobs.jobName
         List<String> templateBaseJobNames = templateJobs.baseJobName
 
         // don't want actual template jobs, just the jobs that were created from the templates and project
         return (allJobNames - templateJobNames).findAll { String jobName ->
-            templateBaseJobNames.find { String baseJobName -> jobName.startsWith(baseJobName)} && jobName.endsWith(tfsProject)
+            templateBaseJobNames.find { String baseJobName -> jobName.startsWith(baseJobName)} && jobName.endsWith(projectName)
         }
     }
 
