@@ -61,8 +61,13 @@ class JenkinsJobManager {
             String projectTemplateName = templateBranchName + "-" + it
             List<String> allBranchNames = tfsApi.branchNamesFromProject(it)
 
-//            println "=== All branch names ==="
-//            allBranchNames.each { println it}
+            println "=== All branch names ==="
+            allBranchNames.each { println it}
+
+            List<String> allBranchNames2 = tfsApi.branchNames(it)
+
+            println "=== All branch names2 ==="
+            allBranchNames2.each { println it}
 
             // ensure that there is at least one job matching the template pattern, collect the set of template jobs
             List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, it, projectTemplateName)

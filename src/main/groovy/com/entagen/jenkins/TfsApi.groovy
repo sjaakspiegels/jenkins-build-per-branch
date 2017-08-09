@@ -62,4 +62,50 @@ class TfsApi {
         return branchNames
     }
 
+
+    public List<String> branchNames(String projectName) {
+
+       List<String> branchNames = []
+
+       def list = getAllSubFolders(tfsCollection)
+
+       branchNames = list.findAll { it.endsWith projectName}
+
+        return branchNames
+    }
+
+    public List<String> getAllSubFolders(String rootFolder) {
+        List<String> branchNames = []
+
+        String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/tfvc/items?scopePath=${rootFolder}"
+
+        def response = [ 'bash', '-c', "curl ${command}" ].execute().text
+       
+        def responseJson = new JsonSlurper().parseText(response)
+
+        def values = responseJson.value
+
+        if (!values.any{elem -> elem.path.endsWith(".sln")}) {
+
+              values.each {
+                if (it.isFolder) {
+                    
+                    def path = URLEncoder.encode(it.path, "UTF-8")
+                
+                    if (it.path != URLDecoder.decode(rootFolder, "UTF-8")) {
+                        
+                        branchNames.addAll(getAllSubFolders(path))
+                    }
+                }
+            }
+        }
+        else {
+            branchNames.add(rootFolder)
+        }
+
+        return branchNames
+    }
+
+
+
 }
