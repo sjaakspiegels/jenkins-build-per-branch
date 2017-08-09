@@ -18,18 +18,17 @@ import org.apache.http.HttpResponse
 class TfsApi {
     String tfsUrl
     String tfsCollection
-    String tfsProject
 	String tfsUser
 	String tfsToken
     Pattern branchNameFilter = null
 
-    public List<String> getBranchNames() {
+    public List<String> getBranchNamesFromProject(String projectName) {
 
        List<String> branchNames = []
 
        def list = getAllFolders(tfsCollection)
 
-       branchNames = list.findAll { it.endsWith tfsProject}
+       branchNames = list.findAll { it.endsWith projectName}
 
         return branchNames
     }

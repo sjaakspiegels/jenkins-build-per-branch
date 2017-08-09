@@ -45,11 +45,6 @@ class JenkinsJobManager {
             this.tfsToken = env.get("TFSTOKEN")
         }
 
-        println "Mijn username is ===" + this.jenkinsUser.toUpperCase() + "==="
-        println this.jenkinsPassword
-        println this.tfsToken
-
-
         initJenkinsApi()
     }
 
@@ -72,18 +67,20 @@ class JenkinsJobManager {
     }
 
 	void syncWithTfs() {
+
         initTfsApi()
 
-        List<String> allBranchNames = tfsApi.branchNames
+        List<String> allBranchNames = tfsApi.branchNamesFromProject(tfsProject)
         List<String> allJobNames = jenkinsApi.jobNames
 
         println "=== All branch names ==="
         allBranchNames.each { println it}
-//        println "All jobs"
-//        allJobNames.each { println it}
+        println "All jobs"
+        allJobNames.each { println it}
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
-        List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
+//        List<TemplateJob> templateJobs = findRequiredTemplateJobs(allJobNames)
+        List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, tfsProject)
 //        println "Template jobs"
 //        templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
   
@@ -190,9 +187,9 @@ class JenkinsJobManager {
         if (!deprecatedJobNames) return
         println "Deleting deprecated jobs:\n\t${deprecatedJobNames.join('\n\t')}"
 
-        deprecatedJobNames.each { String jobName ->
-            jenkinsApi.deleteJob(jobName)
-        }
+//        deprecatedJobNames.each { String jobName ->
+//            jenkinsApi.deleteJob(jobName)
+//        }
     }
 
     public List<ConcreteJob> expectedJobs(List<TemplateJob> templateJobs, List<String> branchNames) {
@@ -232,6 +229,23 @@ class JenkinsJobManager {
         assert templateJobs?.size() > 0, "Unable to find any jobs matching template regex: $regex\nYou need at least one job to match the templateJobPrefix and templateBranchName suffix arguments"
         return templateJobs
     }
+
+    List<TemplateJob> findRequiredTemplateJobsFromProject(List<String> allJobNames, String projectName) {
+        String templateName = "Main-" + projectName
+        String regex = /^($templateJobPrefix-[^-]*)-($templateName)$/
+
+        List<TemplateJob> templateJobs = allJobNames.findResults { String jobName ->
+            TemplateJob templateJob = null
+            jobName.find(regex) { full, baseJobName, branchName ->
+                templateJob = new TemplateJob(jobName: full, baseJobName: baseJobName, templateBranchName: branchName)
+            }
+            return templateJob
+        }
+
+        assert templateJobs?.size() > 0, "Unable to find any jobs matching template regex: $regex\nYou need at least one job to match the templateJobPrefix and templateBranchName suffix arguments"
+        return templateJobs
+    }
+
 
     public void syncViews(List<String> allBranchNames) {
         List<String> existingViewNames = jenkinsApi.getViewNames(this.nestedView)
@@ -307,7 +321,8 @@ class JenkinsJobManager {
 	TfsApi initTfsApi() {
 		if (!tfsApi) {
 			assert tfsUrl != null
-			this.tfsApi = new TfsApi(tfsUser: tfsUser, tfsToken: tfsToken, tfsUrl: tfsUrl, tfsCollection: tfsCollection, tfsProject: tfsProject)
+//			this.tfsApi = new TfsApi(tfsUser: tfsUser, tfsToken: tfsToken, tfsUrl: tfsUrl, tfsCollection: tfsCollection, tfsProject: tfsProject)
+			this.tfsApi = new TfsApi(tfsUser: tfsUser, tfsToken: tfsToken, tfsUrl: tfsUrl, tfsCollection: tfsCollection)
             if (this.branchNameRegex){
                 this.tfsApi.branchNameFilter = ~this.branchNameRegex
             }
