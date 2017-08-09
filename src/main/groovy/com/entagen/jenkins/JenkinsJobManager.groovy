@@ -56,7 +56,7 @@ class JenkinsJobManager {
         println "Projects:"
         projectlist.each { println "* " + it}
 
-        List<String> allBranchNames = tfsApi.allBranchNames
+        List<String> allBranchNames = tfsApi.allBranchNames()
         println "=== All branch names ==="
         allBranchNames.each { println it}
 
