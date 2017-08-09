@@ -61,7 +61,7 @@ class JenkinsJobManager {
         allJobNames.each { println it}
 
         // ensure that there is at least one job matching the template pattern, collect the set of template jobs
-        List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, tfsProject)
+        List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, tfsProject, projectTemplateName)
         println "Template jobs"
         templateJobs.each { println it.jobName + "; " + it.baseJobName + "; " + it.templateBranchName}
   
@@ -185,9 +185,8 @@ class JenkinsJobManager {
         }
     }
 
-    List<TemplateJob> findRequiredTemplateJobsFromProject(List<String> allJobNames, String projectName) {
-        String templateName = templateBranchName + "-" + projectName
-        String regex = /^($templateJobPrefix-[^-]*)-($templateName)$/
+    List<TemplateJob> findRequiredTemplateJobsFromProject(List<String> allJobNames, String projectName, String projectTemplateName) {
+        String regex = /^($templateJobPrefix-[^-]*)-($projectTemplateName)$/
 
         List<TemplateJob> templateJobs = allJobNames.findResults { String jobName ->
             TemplateJob templateJob = null
