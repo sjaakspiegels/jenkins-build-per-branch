@@ -126,6 +126,8 @@ class TfsApi {
                 println value
                 println "================"
                 println value.publisherInputs
+                println "================"
+                println value.publisherInputs.path
 
             }
         }
