@@ -141,7 +141,6 @@ class JenkinsJobManager {
         for(ConcreteJob missingJob in missingJobs) {
             println "Creating missing job: ${missingJob.jobName} from ${missingJob.templateJob.jobName}"
             jenkinsApi.cloneJobForBranch(missingJob, templateJobs)
-            tfsApi.CreateServiceHook(missingJob)
             if (startOnCreate) {
                 jenkinsApi.startJob(missingJob)
             }
@@ -159,6 +158,7 @@ class JenkinsJobManager {
         for(ConcreteJob missingJob in missingJobs) {
             println "Creating missing job: ${missingJob.jobName} from ${missingJob.templateJob.jobName} with source path ${missingJob.path}"
             jenkinsApi.cloneJobForBranch(missingJob, templateJobs)
+            tfsApi.CreateServiceHook(missingJob)
             if (startOnCreate) {
                 jenkinsApi.startJob(missingJob)
             }

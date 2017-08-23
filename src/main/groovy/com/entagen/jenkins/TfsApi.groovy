@@ -106,4 +106,23 @@ class TfsApi {
         println "Creating web hook for job: ${job.jobName} with path ${job.path}"
     }
 
+    public List<String> getHookPaths() {
+        List<String> paths = []
+
+        String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/hooks/subscriptions"
+
+        def response = [ 'bash', '-c', "curl ${command}" ].execute().text
+       
+        def responseJson = new JsonSlurper().parseText(response)
+
+        paths = responseJson.value.publisherInputs.path
+
+        for (path in paths) {
+            println path
+        }
+
+        return paths
+    }
+
+
 }
