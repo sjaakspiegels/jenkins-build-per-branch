@@ -44,7 +44,7 @@ class JenkinsJobManager {
             this.tfsToken = env.get("TFSTOKEN")
         }
 
-        println "Jenkinsuser: " + this.jenkinsUser.toLowerCase()
+        println "Jenkinsuser: " + this.jenkinsUser.toUpperCase()
         println "Jenkinspassword: " + this.jenkinsPassword.toLowerCase()
         println "TfsToken: " + this.tfsToken.toLowerCase()
 
