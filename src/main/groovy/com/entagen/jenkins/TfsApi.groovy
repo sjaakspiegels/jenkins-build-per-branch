@@ -104,6 +104,7 @@ class TfsApi {
 
     public CreateServiceHook(ConcreteJob job) {
         println "Creating web hook for job: ${job.jobName} with path ${job.path}"
+        def lst = getHookPaths()
     }
 
     public List<String> getHookPaths() {
