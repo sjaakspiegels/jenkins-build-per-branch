@@ -129,12 +129,7 @@ class TfsApi {
                             "       \"projectId\":\"9950df28-b8a4-445b-b672-9fc421a628b5\"} " +
                             "   } '" 
 
-            println command
-
             def response = [ 'bash', '-c', "curl ${command}" ].execute().text
-
-            println response
-
         }
     }
 
