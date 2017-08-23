@@ -104,7 +104,11 @@ class TfsApi {
 
     public CreateServiceHook(ConcreteJob job) {
         println "Creating web hook for job: ${job.jobName} with path ${job.path}"
-        def lst = getHookPaths()
+        def paths = getHookPaths()
+
+        if (!paths.contains(job.path)) {
+            println "Start creating webhook"
+        }
     }
 
     public List<String> getHookPaths() {
@@ -114,21 +118,11 @@ class TfsApi {
 
         def response = [ 'bash', '-c', "curl ${command}" ].execute().text
         def responseJson = new JsonSlurper().parseText(response)
-//        println responseJson
         def values = responseJson.value
-        //.eventType
-        //publisherInputs
-        //publisherInputs.path
 
         for (value in values) {
             if (value.eventType == "tfvc.checkin") {
-                println "================"
-                println value
-                println "================"
-                println value.publisherInputs
-                println "================"
-                println value.publisherInputs.path
-
+                paths.Add(value.publisherInputs.path)
             }
         }
 
