@@ -122,7 +122,7 @@ class TfsApi {
 
         for (value in values) {
             if (value.eventType == "tfvc.checkin") {
-                paths.Add(value.publisherInputs.path)
+                paths.add(value.publisherInputs.path)
             }
         }
 
