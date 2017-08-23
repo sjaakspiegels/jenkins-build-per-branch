@@ -31,7 +31,7 @@ class JenkinsApi {
         this.requestInterceptor = new HttpRequestInterceptor() {
             void process(HttpRequest httpRequest, HttpContext httpContext) {
                 def auth = jenkinsServerUser + ':' + jenkinsServerPassword
-                println auth.toUpperCase()
+
                 httpRequest.addHeader('Authorization', 'Basic ' + auth.bytes.encodeBase64().toString())
             }
         }

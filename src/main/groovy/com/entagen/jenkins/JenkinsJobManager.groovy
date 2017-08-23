@@ -44,10 +44,6 @@ class JenkinsJobManager {
             this.tfsToken = env.get("TFSTOKEN")
         }
 
-        println "Jenkinsuser: " + this.jenkinsUser.toUpperCase()
-        println "Jenkinspassword: " + this.jenkinsPassword.toLowerCase()
-        println "TfsToken: " + this.tfsToken.toLowerCase()
-
         initJenkinsApi()
     }
 
@@ -145,10 +141,10 @@ class JenkinsJobManager {
         for(ConcreteJob missingJob in missingJobs) {
             println "Creating missing job: ${missingJob.jobName} from ${missingJob.templateJob.jobName}"
             jenkinsApi.cloneJobForBranch(missingJob, templateJobs)
+            tfsApi.CreateServiceHook(missingJob)
             if (startOnCreate) {
                 jenkinsApi.startJob(missingJob)
             }
-            tfsApi.CreateServiceHook(missingJob)
         }
     }
 
