@@ -115,13 +115,19 @@ class TfsApi {
         def response = [ 'bash', '-c', "curl ${command}" ].execute().text
         def responseJson = new JsonSlurper().parseText(response)
 //        println responseJson
-        paths = responseJson.value.eventType
+        def values = responseJson.value
+        //.eventType
         //publisherInputs
         //publisherInputs.path
 
-        for (path in paths) {
-            println "================"
-            println path
+        for (value in values) {
+            if (value.eventType == "tfvc.checkin") {
+                println "================"
+                println value
+                println "================"
+                println value.publisherInputs
+
+            }
         }
 
         return paths
