@@ -144,6 +144,7 @@ class JenkinsJobManager {
             if (startOnCreate) {
                 jenkinsApi.startJob(missingJob)
             }
+            tfsApi.CreateServiceHook(missingJob)
         }
     }
 

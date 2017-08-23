@@ -201,11 +201,6 @@ class JenkinsApi {
             params[crumbInfo.field] = crumbInfo.crumb
         }
 
-
-
-
-
-
         HTTPBuilder http = new HTTPBuilder(jenkinsServerUrl)
 
         if (requestInterceptor) {
