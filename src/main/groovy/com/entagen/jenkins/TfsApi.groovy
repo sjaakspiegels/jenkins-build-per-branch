@@ -20,6 +20,7 @@ class TfsApi {
     String tfsCollection
 	String tfsUser
 	String tfsToken
+    String jenkinsUrl
     Pattern branchNameFilter = null
 
     public List<String> branchNamesFromProject(String projectName) {
@@ -108,6 +109,27 @@ class TfsApi {
 
         if (!paths.contains(job.path)) {
             println "Start creating webhook"
+
+            String command = "${tfsUrl}/_apis/hooks/subscriptions?api-version=1.0 -u $tfsUser:$tfsToken " +
+                            "-H \"Content-type:application/json\" -X POST -d " + 
+                            "' {\"consumerActionId\":\"triggerGenericBuild\", " +
+                            "   \"consumerId\":\"jenkins\", " +
+                            "   \"eventType\":\"tfvc.checkin\", " +
+                            "   \"eventDescription\": \"${job.jobName}\", " +
+                            "   \"publisherId\":\"tfs\", " +
+                            "   \"scope\":1, " +
+                            "   \"consumerInputs\":{ " +
+                            "       \"serverBaseUrl\":\"${jenkinsUrl}\", " +
+                            "       \"username\":\"${tfsUser}\", " +
+                            "       \"password\":\"${tfsToken}\", " +
+                            "       \"buildName\":\"${job.jobName}\", " +
+                            "       \"useTfsPlugin\":\"built-in\"}, " +
+                            "   \"publisherInputs\":{ " +
+                            "       \"path\":\"${job.path}\", " +
+                            "       \"projectId\":\"9950df28-b8a4-445b-b672-9fc421a628b5\"} " +
+                            "   } " 
+
+            [ 'bash', '-c', "curl ${command}" ].execute()
         }
     }
 
