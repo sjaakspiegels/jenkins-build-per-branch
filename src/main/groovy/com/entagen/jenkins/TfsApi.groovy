@@ -115,10 +115,11 @@ class TfsApi {
         def response = [ 'bash', '-c', "curl ${command}" ].execute().text
         def responseJson = new JsonSlurper().parseText(response)
 //        println responseJson
-        paths = responseJson.value.publisherInputs.path
+        paths = responseJson.value.publisherInputs
         //publisherInputs.path
 
         for (path in paths) {
+            println "================"
             println path
         }
 
