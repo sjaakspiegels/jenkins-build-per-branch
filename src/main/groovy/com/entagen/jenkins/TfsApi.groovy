@@ -111,6 +111,7 @@ class TfsApi {
         if (!paths.contains(job.path)) {
             println "Creating web hook for job: ${job.jobName} with path ${job.path}"
             
+            def jenkinsUserName = jenkinsUser.replace("\\", "\\\\")
 
             String command = "${tfsUrl}/_apis/hooks/subscriptions?api-version=1.0 -u $tfsUser:$tfsToken " +
                             "-H \"Content-type:application/json\" -X POST -d " + 
@@ -122,7 +123,7 @@ class TfsApi {
                             "   \"scope\":1, " +
                             "   \"consumerInputs\":{ " +
                             "       \"serverBaseUrl\":\"${jenkinsUrl}\", " +
-                            "       \"username\":\"${jenkinsUser}\", " +
+                            "       \"username\":\"${jenkinsUserName}\", " +
                             "       \"password\":\"${jenkinsPassword}\", " +
                             "       \"buildName\":\"${job.jobName}\", " +
                             "       \"useTfsPlugin\":\"built-in\"}, " +
