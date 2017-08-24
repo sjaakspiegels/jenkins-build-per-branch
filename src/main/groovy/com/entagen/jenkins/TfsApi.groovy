@@ -122,7 +122,7 @@ class TfsApi {
                             "   \"scope\":1, " +
                             "   \"consumerInputs\":{ " +
                             "       \"serverBaseUrl\":\"${jenkinsUrl}\", " +
-                            "       \"username\":\"${jenkinsUser}\", " +
+                            "       \"username\":\"${tfsUser}\", " +
                             "       \"password\":\"${jenkinsPassword}\", " +
                             "       \"buildName\":\"${job.jobName}\", " +
                             "       \"useTfsPlugin\":\"built-in\"}, " +
