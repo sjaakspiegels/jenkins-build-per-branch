@@ -21,6 +21,8 @@ class TfsApi {
 	String tfsUser
 	String tfsToken
     String jenkinsUrl
+    String jenkinsUser
+    String jenkinsPassword
     Pattern branchNameFilter = null
 
     public List<String> branchNamesFromProject(String projectName) {
@@ -104,11 +106,11 @@ class TfsApi {
     }
 
     public CreateServiceHook(ConcreteJob job) {
-        println "Creating web hook for job: ${job.jobName} with path ${job.path}"
         def paths = getHookPaths()
 
         if (!paths.contains(job.path)) {
-            println "Start creating webhook"
+            println "Creating web hook for job: ${job.jobName} with path ${job.path}"
+            
 
             String command = "${tfsUrl}/_apis/hooks/subscriptions?api-version=1.0 -u $tfsUser:$tfsToken " +
                             "-H \"Content-type:application/json\" -X POST -d " + 
@@ -120,8 +122,8 @@ class TfsApi {
                             "   \"scope\":1, " +
                             "   \"consumerInputs\":{ " +
                             "       \"serverBaseUrl\":\"${jenkinsUrl}\", " +
-                            "       \"username\":\"${tfsUser}\", " +
-                            "       \"password\":\"${tfsToken}\", " +
+                            "       \"username\":\"${jenkinsUser}\", " +
+                            "       \"password\":\"${jenkinsPassword}\", " +
                             "       \"buildName\":\"${job.jobName}\", " +
                             "       \"useTfsPlugin\":\"built-in\"}, " +
                             "   \"publisherInputs\":{ " +
