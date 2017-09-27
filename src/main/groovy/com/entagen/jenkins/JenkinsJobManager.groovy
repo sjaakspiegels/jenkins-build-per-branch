@@ -67,8 +67,8 @@ class JenkinsJobManager {
 
             List<String> projectBranchNames = allBranchNames.findAll { it.endsWith projectName}
 
-//            println "=== Project branch names ==="
-//            projectBranchNames.each { println it}
+            println "=== Project branch names ==="
+            projectBranchNames.each { println it}
 
             // ensure that there is at least one job matching the template pattern, collect the set of template jobs
             List<TemplateJob> templateJobs = findRequiredTemplateJobsFromProject(allJobNames, projectName, projectTemplateName)
