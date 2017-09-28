@@ -55,9 +55,6 @@ class TfsApi {
                     def path = URLEncoder.encode(it.path, "UTF-8")
                 
                     if (it.path != URLDecoder.decode(rootFolder, "UTF-8")) {
-                        if (it.path.contains("/Dev/")) {
-                            println "Skip folder $it.path"
-                        }
                         branchNames.add(it.path)
                         branchNames.addAll(getAllFolders(path))
                     }
@@ -95,7 +92,9 @@ class TfsApi {
                     def path = URLEncoder.encode(it.path, "UTF-8")
                 
                     if (it.path != URLDecoder.decode(rootFolder, "UTF-8")) {
-                        
+                        if (it.path.contains("/Dev/")) {
+                            println "Skip folder $it.path"
+                        }                        
                         branchNames.addAll(getAllSubFolders(path))
                     }
                 }
