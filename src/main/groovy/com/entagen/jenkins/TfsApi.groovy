@@ -149,9 +149,9 @@ class TfsApi {
         for (value in values) {
             if (value.consumerInputs.buildName == jobName) {
                 println "Delete ServiceHook " + value.id
-                String command = "-X DELETE ${tfsUrl}/_apis/hooks/subscriptions/${value.id}?api-version=1.0 -u $tfsUser:$tfsToken " 
+                String delete = "-X DELETE ${tfsUrl}/_apis/hooks/subscriptions/${value.id}?api-version=1.0 -u $tfsUser:$tfsToken " 
  
-                def response = [ 'bash', '-c', "curl ${command}" ].execute().text
+                def respdelete = [ 'bash', '-c', "curl ${delete}" ].execute().text
             }
         }
     }
