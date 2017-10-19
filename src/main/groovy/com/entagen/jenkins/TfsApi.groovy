@@ -137,6 +137,23 @@ class TfsApi {
         }
     }
 
+    public DeleteServiceHook(String jobName) {
+        List<String> buildNames = []
+
+        String command = "-u $tfsUser:$tfsToken ${tfsUrl}/_apis/hooks/subscriptions"
+
+        def response = [ 'bash', '-c', "curl ${command}" ].execute().text
+        def responseJson = new JsonSlurper().parseText(response)
+        def values = responseJson.value
+
+        for (value in values) {
+            if (value.consumerInputs.buildName == jobName) {
+                println "Delete ServiceHook " + value.id
+            }
+        }
+    }
+
+
     public List<String> getHookPaths() {
         List<String> paths = []
 

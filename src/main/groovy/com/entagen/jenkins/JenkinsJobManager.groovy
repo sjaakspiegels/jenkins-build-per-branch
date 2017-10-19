@@ -171,6 +171,7 @@ class JenkinsJobManager {
 
         deprecatedJobNames.each { String jobName ->
             jenkinsApi.deleteJob(jobName)
+            tfsApi.DeleteServiceHook(jobName)
         }
     }
 
