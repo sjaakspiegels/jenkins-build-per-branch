@@ -217,7 +217,7 @@ class JenkinsApi {
             throw new Exception(msg)
         }
 
-        println "S: Execute post"
+        println "S: Execute post ${path}"
         
         http.post(path: path, body: postBody, query: params,
                 requestContentType: contentType) { resp ->
