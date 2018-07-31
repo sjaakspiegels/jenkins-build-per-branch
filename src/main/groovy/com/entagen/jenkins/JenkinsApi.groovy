@@ -224,6 +224,8 @@ class JenkinsApi {
             assert resp.statusLine.statusCode < 400
             status = resp.statusLine.statusCode
         }
+        
+        println "S: Post executed"
         return status
     }
 
