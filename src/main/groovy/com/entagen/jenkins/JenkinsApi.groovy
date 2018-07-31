@@ -196,6 +196,7 @@ class JenkinsApi {
                     throw new Exception(msg)
                 }
             }
+            println "S: Crumb found"
         }
 
         if (crumbInfo) {
@@ -216,6 +217,8 @@ class JenkinsApi {
             throw new Exception(msg)
         }
 
+        println "S: Execute post"
+        
         http.post(path: path, body: postBody, query: params,
                 requestContentType: contentType) { resp ->
             assert resp.statusLine.statusCode < 400
